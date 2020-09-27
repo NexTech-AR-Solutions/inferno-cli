@@ -16,10 +16,10 @@
     "cheerio": "^1.0.0-rc.3",
     "cli-ux": "^5.5.0",
     "cosmiconfig": "^7.0.0",
+    "fs-extra": "^9.0.1",
     "js-beautify": "^1.13.0",
     "moment": "^2.29.0",
     "node-notifier": "^8.0.0",
-    "parse5": "^6.0.1",
     "tslib": "^1.13.0"
   },
   "devDependencies": {

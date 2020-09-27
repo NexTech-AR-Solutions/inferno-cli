@@ -7,15 +7,11 @@ A command line tool for working with Inferno AR Virtual Event Platform
 <!-- usage -->
 ```sh-session
 $ npm install -g inferno-cli
-
 $ inferno COMMAND
 running command...
-
 $ inferno (-v|--version|version)
 inferno-cli/0.0.1 win32-x64 node-v12.14.0
-
 $ inferno --help [COMMAND]
-
 USAGE
   $ inferno COMMAND
 ...
@@ -23,44 +19,27 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* `inferno help [COMMAND]`
-* `inferno pull [PROJECT] [update]`
-* `inferno push [PROJECT]`
+* [`inferno generate [PROJECT] [FILE] [TEST]`](#inferno-generate-project-file-test)
+* [`inferno pull PROJECT`](#inferno-pull-project)
+* [`inferno push PROJECT [UPDATE]`](#inferno-push-project-update)
+* [`inferno help [COMMAND]`](#inferno-help-command)
 
+## `inferno generate [PROJECT] [FILE] [TEST]`
 
-## `inferno pull [PROJECT]`
-
-```
-USAGE
-  $ inferno pull [project]
-
-ARGUMENTS
-  project - name of project defined in inferno.config.js file
-
-EXAMPLE
-  $ inferno pull novo
-  
-```
-
-## `inferno push [PROJECT] [update]`
+Creates a new project directory if it does not exists and creates a new Code Snippet Template HTML file in the project directory
 
 ```
 USAGE
-  $ inferno push [project] update
+  $ inferno generate [PROJECT] [FILE] [TEST]
 
-ARGUMENTS
-  project - name of project defined in inferno.config.js file
-  update -  if provided will push the code to the server, 
-
-EXAMPLE
-  $ inferno push novo update
-
-EXAMPLE
-  $ inferno push novo 
-  displays output of files that would be updated  
-
+OPTIONS
+  -f, --file=file        file name to create in the project folder
+  -h, --help             show CLI help
+  -p, --project=project  project to create file in
+  -t, --test             set to test
 ```
 
+_See code: [src\commands\generate.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\generate.ts)_
 
 ## `inferno help [COMMAND]`
 
@@ -77,6 +56,42 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src\commands\help.ts)_
+
+## `inferno pull PROJECT`
+
+Pull code snippets to Inferno AR Instance associated with your login
+
+```
+USAGE
+  $ inferno pull PROJECT
+
+ARGUMENTS
+  PROJECT  project name to pull from
+
+EXAMPLE
+  $ inferno pull projectname
+```
+
+_See code: [src\commands\pull.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\pull.ts)_
+
+## `inferno push PROJECT [UPDATE]`
+
+Push code snippets to Inferno AR Instance associated with your login
+
+```
+USAGE
+  $ inferno push PROJECT [UPDATE]
+
+ARGUMENTS
+  PROJECT  project name to push
+  UPDATE   if = "update", then push code to server, otherwise just output test
+
+EXAMPLE
+  $ inferno push projectname
+```
+
+_See code: [src\commands\push.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\push.ts)_
 <!-- commandsstop -->
 
 
@@ -123,7 +138,5 @@ you want to push up as a snippet example <novowidget></novowidget> = 'novowidget
 
 
 ## IMPORTANT ##
-Since *inferno.config.js* contains usernames and passwords, be sure to keep the file 
+Since **inferno.config.js** contains usernames and passwords, be sure to keep the file 
 locally secure and add it to gitgnore or other repo ignore systems.
-
-
