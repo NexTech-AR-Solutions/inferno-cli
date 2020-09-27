@@ -45,8 +45,6 @@ export default class Push extends Command {
       this.putSnippets(snippet);
     })
 
-    this.log(this.message.finished);
-
   }
 
   private getFullPath(fileName: string) {
