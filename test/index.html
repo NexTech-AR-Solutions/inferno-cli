@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"
+      class="bgpositionshorthand bgpositionxy bgrepeatround bgrepeatspace bgsizecover borderradius cssanimations csscalc csstransforms supports csstransforms3d preserve3d csstransitions no-flexboxtweener fontface svg svgasimg svgclippaths svgfilters svgforeignobject inlinesvg smil localstorage sessionstorage websqldatabase multiplebgs"
+      style='--branding-primary:#1e5194; --sidebar-bg-color:#3c5a81;'>
+
+</html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Inferno Snippet Mockup Template</title>
+  <!-- Import Roboto -->
+  <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons"
+      rel="stylesheet">
+  <!-- Import Inferno's Styles Local or CDN -->
+  <!-- <link rel="stylesheet" href="./inferno-base-styles.css">
+  <link rel="stylesheet" href="./inferno-extra-styles.css"> -->
+  <link rel="stylesheet"
+        href="https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-base-styles.css">
+  <link rel="stylesheet"
+        href="https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-extra-styles.css">
+  <!-- Import JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script>
+    let landingPageEl = null
+  </script>
+</head>
+
+<body>
+<app-root class='layout-fixed has-menu'>
+  <videos-layout>
+    <div class="wrapper" layout="column">
+      <app-header class="topnavbar-wrapper">
+        <mat-toolbar
+            class="mat-elevation-z3 navbar topnavbar mat-toolbar mat-primary mat-toolbar-single-row ng-star-inserted"
+            color="primary">
+          <div class="navbar-header"></div>
+          <div class="ellipsis ng-star-inserted" flex="" layout="row" layout-align="start center">
+            <button class="menu-btn mat-icon-button ng-star-inserted" hide="" mat-icon-button="" show-gt-sm=""
+                    trigger-resize="" onclick="mtTriggerMenu()"><span class="mat-button-wrapper">
+                  <mat-icon class="mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">menu
+                  </mat-icon>
+                </span>
+            </button>
+          </div>
+        </mat-toolbar>
+      </app-header>
+      <!-- SIDEBAR -->
+      <videos-sidebar class="aside">
+        <div class="aside-inner">
+          <nav class="sidebar" sidebar-anyclick-close=""></nav>
+        </div>
+      </videos-sidebar>
+      <!-- ./ SIDEBAR -->
+      <!-- LANDING -->
+      <section class="IE-FlexAuto" flex="" style='border: 2px none red;'>
+        <div class="content-wrapper">
+          <landing-page class="ng-star-inserted">
+            <div mutationobserver="" id="landing">
+              <!-- CREATE SHADOW DOM AND ATTACH STYLES -->
+              <script>
+                landingPageEl = document.querySelector('landing-page').attachShadow({mode: 'open'})
+                const landing = landingPageEl.appendChild(document.getElementById('landing'))
+                landingPageEl.appendChild(landing)
+              </script>
+              <style type="text/css">
+                @import url("https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-shadow-styles.css");
+              </style>
+
+              <!-- SNIPPET CONTENT START -->
+              <novowidget>
+                <style>
+                  h1 {
+                    color: red;
+                    margin: 40px;
+                  }
+                  .content {
+                    background-image: url('https://studio304nextechar.freetls.fastly.net/infernoAR/029-usf/assets/new_bkg-agenda.png');
+                    background-attachment: fixed;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    min-height: 100%;
+                    margin: -20px;
+                    padding: 20px 24px;
+                    z-index: 1;
+                    font-family: 'Trade Gothic', sans-serif !important;
+                  }
+                </style>
+                <script> console.log('test')</script>
+                <div class="content">
+                  <h1>My Test Snippet</h1>
+                  <p>just the stuff i want in the snippet</p>
+                </div>
+
+              </novowidget>
+              <!-- SNIPPET CONTENT END -->
+
+
+            </div>
+          </landing-page>
+        </div>
+      </section>
+      <!-- LANDING -->
+      <!-- FOOTER -->
+      <footer app-footer="" layout="row" layout-align="start center">
+        Inferno Footer
+      </footer>
+      <!-- ./ FOOTER -->
+    </div>
+  </videos-layout>
+</app-root>
+</body>
+
+<!-- Menu Collapse Script -->
+<script>
+  function mtTriggerMenu() {
+    const appRoot = document.querySelector('app-root')
+    const sideBar = document.querySelector('videos-sidebar')
+
+    if (!appRoot.classList.contains('aside-collapsed') && !appRoot.classList.contains('aside-hidden')) {
+      console.log('collapse')
+      appRoot.classList.add('aside-collapsed')
+      sideBar.classList.remove('hidden')
+    } else if (appRoot.classList.contains('aside-collapsed') && !appRoot.classList.contains('aside-hidden')) {
+      appRoot.classList.add('aside-hidden')
+      sideBar.classList.add('hidden')
+    } else if (appRoot.classList.contains('aside-hidden')) {
+      appRoot.classList.remove('aside-hidden')
+      appRoot.classList.remove('aside-collapsed')
+      sideBar.classList.remove('hidden')
+    }
+  }
+
+  function populateInfernoElements() {
+    const qaDiv = landingPageEl.querySelector('#inferno-questions-basic')
+    const videoDiv = landingPageEl.querySelector('#inferno-video-player')
+    if (qaDiv) {
+      $(qaDiv).append(`<questions _nghost-qch-c20=""><!----><!----><div _ngcontent-qch-c20="" novalidate="" class="ng-untouched ng-pristine ng-valid ng-star-inserted"><div _ngcontent-qch-c20="" class="inferno-input-group"><span _ngcontent-qch-c20="" class="inferno-input-group-addon">Ask A Question</span><input _ngcontent-qch-c20="" class="inferno-form-control ng-untouched ng-pristine ng-valid" formcontrolname="question" type="text"><span _ngcontent-qch-c20="" class="inferno-input-group-btn"><button _ngcontent-qch-c20="" class="inferno-btn" type="button">Submit</button></span></div></div></questions>`)
+    }
+    if (videoDiv) {
+      $(videoDiv).append(`<iframe width="640" height="360" src="https://jolokia.inferno.jolokia.com/embed/ecd7f4ad-2c0a-4f3f-bfd6-37670cc2edbd" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`)
+    }
+  }
+
+  populateInfernoElements()
+</script>
+
+</html>
