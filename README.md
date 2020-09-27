@@ -27,9 +27,9 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`inferno help [COMMAND]`](#inferno-help-command)
-* [`inferno pull [PROJECT] [update]`](#inferno-pull-command)
-* [`inferno push [PROJECT]`](#inferno-push-command)
+* `inferno help [COMMAND]`
+* `inferno pull [PROJECT] [update]`
+* `inferno push [PROJECT]`
 
 
 ## `inferno pull [PROJECT]`
