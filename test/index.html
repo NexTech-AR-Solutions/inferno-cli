@@ -72,21 +72,19 @@
               <!-- SNIPPET CONTENT START -->
               <codesnippet>
                 <style>
-                  :host {
-                    --header-footer-height: 114px;
-                  }
                   h1 {
                     color: yellow;
                     margin: 40px;
                     font-size: 3em;
                   }
+
                   .content {
                     background-image: url('https://pixabay.com/get/55e0d7424a55ae14f6da8c7dda353678153edce65650774b_1280.jpg');
                     background-attachment: fixed;
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-position: center;
-                    min-height: calc(100vh - var(--header-footer-height));
+                    min-height: calc(100vh - 114px);
                     margin: -20px;
                     padding: 20px 24px;
                     z-index: 1;
@@ -95,7 +93,7 @@
                 </style>
                 <script> console.log('test')</script>
                 <div class="content">
-                  <h1>My Test Snippet</h1>
+                  <h1>Inferno AR Test Snippet</h1>
                 </div>
 
               </codesnippet>

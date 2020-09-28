@@ -26,12 +26,14 @@ export default class Push extends Command {
   message: Messages = new Messages();
   util: NovoUtils = new NovoUtils();
   inferno: InfernoAPI = new InfernoAPI();
+  projectName: string | null | undefined;
 
   async run() {
     this.log(this.message.starting);
 
     const {args} = this.parse(Push);
     const project = await this.util.getConfig(args.project);
+    this.projectName = args.project;
     const snippets = project.snippets;
 
     if (args.update.toLowerCase() !== 'update') {
@@ -52,7 +54,7 @@ export default class Push extends Command {
   }
 
   private getFullPath(fileName: string) {
-    return path.join(this.util.basePath, fileName);
+    return path.join(this.util.basePath, this.projectName, fileName);
   }
 
   private displaySnippets(snippets: any) {
