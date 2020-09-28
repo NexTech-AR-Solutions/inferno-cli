@@ -42,7 +42,11 @@ export default class Push extends Command {
 
     await this.inferno.init(project.username, project.password);
     snippets.forEach((snippet: any) => {
-      this.putSnippets(snippet);
+      if(snippet.update) {
+        this.putSnippets(snippet);
+      } else {
+        this.log(chalk.yellow('Skipping Update - '), snippet.file);
+      }
     })
 
   }
@@ -53,6 +57,10 @@ export default class Push extends Command {
 
   private displaySnippets(snippets: any) {
     const columns = {
+      update: {
+        header: 'Update',
+        get: (row: any) => row.update ? 'UPDATE' : 'SKIP'
+      },
       file: {
         header: 'Local File',
         get: (row: any) => chalk.yellow(this.getFullPath(row.file))
