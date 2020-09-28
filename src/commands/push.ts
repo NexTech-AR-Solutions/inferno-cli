@@ -93,7 +93,7 @@ export default class Push extends Command {
 
     const newSnippet = {
       codeSnippetId: snippet.id,
-      comments: "Updated via inferno-cli",
+      comments: "Updated via inferno-cli - " + this.util.username,
       id: "00000000-0000-0000-0000-000000000000",
       revisionDate: moment().format(),
       snippet: codeSnippet

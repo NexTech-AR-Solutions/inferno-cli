@@ -7,6 +7,8 @@ export default class NovoUtils {
 
   basePath: string | undefined;
   wrapperElement: string | null | undefined;
+  username: string | null | undefined;
+  
 
   public async getConfig(projectName: string) {
     const explorer = cosmiconfig('inferno');
@@ -25,6 +27,7 @@ export default class NovoUtils {
     this.basePath = path.parse(cosmic.filepath).dir;
     const conf = this.getProjectConfig(cosmic, projectName);
     this.wrapperElement = conf.wrapperElement;
+    this.username = conf.username;
     return conf;
 
   }
