@@ -116,6 +116,11 @@ export default class Push extends Command {
     const contents = fs.readFileSync(this.getFullPath(fileName)).toString();
     const $ = cheerio.load(contents);
     const rawCode = $(this.util.wrapperElement).html();
+
+    if(fileName.includes('liquid')) {
+      return rawCode;
+    }
+
     return beautify(rawCode);
   }
 
