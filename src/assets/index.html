@@ -75,10 +75,10 @@
               <!-- SNIPPET CONTENT START -->
               <codesnippet>
                 <style>
-                  h1 {
-                    color: yellow;
-                    margin: 40px;
-                    font-size: 3em;
+                  /* prevent entire screen from going black if you try to reference an image that does not exist*/
+                  /* apparently some style or JS that is setting a style do that somewhere else in the inferno system*/
+                  img::after {
+                    content: none;
                   }
 
                   .content {
@@ -96,7 +96,7 @@
                 </style>
                 <script> console.log('test')</script>
                 <div class="content">
-                  <h1>Inferno AR Test Snippet</h1>
+                  <div style="width: 90%; height: 200px; background: #000: color: #fff; font-size: 3em;">Inferno AR Test Snippet</div>
                 </div>
 
               </codesnippet>
