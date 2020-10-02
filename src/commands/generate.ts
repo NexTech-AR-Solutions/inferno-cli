@@ -28,25 +28,34 @@ export default class Generate extends Command {
     }
 
     const project = await this.util.getConfig(projectName);
-    const newPath = path.join(this.util.basePath, projectName, filename);
+    const templateTargetPath = path.join(this.util.basePath, projectName, filename);
+    const cssTargetPath = path.join(this.util.basePath, projectName, 'inferno-client.css');
 
     if (flags.test || args.test) {
-      this.log(chalk.yellow('\ngenerating new Inferno AR Code Snippet template file '), chalk.blue(newPath));
-      if (fs.existsSync(newPath)) {
+      this.log(chalk.yellow('\ngenerating new Inferno AR Code Snippet template file '), chalk.blue(templateTargetPath));
+      if (fs.existsSync(templateTargetPath)) {
         this.log(chalk.magentaBright('WARNING'), chalk.yellow('file would not be generated, it already exists'));
       }
       this.log('\n');
       return;
     }
 
-    const templatePath = path.join(__dirname, '../assets/index.html');
+    const templatePath = path.join(__dirname, '../assets/template.html');
+    const css = path.join(__dirname, '../assets/inferno-client.css');
 
     try {
-      fs.copySync(templatePath, newPath, {
+      this.log('copying from ' + templatePath, ' to ' + templateTargetPath);
+
+      fs.copySync(templatePath, templateTargetPath, {
         overwrite: false,
         errorOnExist: true,
       });
-      this.log(chalk.yellowBright('\nGENERATED '), chalk.magentaBright(newPath));
+      this.log('copying from ' + css, ' to ' + cssTargetPath);
+      fs.copySync(css, cssTargetPath, {
+        overwrite: false,
+        errorOnExist: false,
+      });
+      this.log(chalk.yellowBright('\nGENERATED '), chalk.magentaBright(templateTargetPath));
     } catch (e) {
       this.log(chalk.red('\n', e));
     }

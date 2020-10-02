@@ -12,5 +12,5 @@ node_modules
 .infernorc.yml
 .infernorc.js
 .infernorc.cjs
-inferno.config.js
+sample.inferno.config.js
 inferno.config.cjs

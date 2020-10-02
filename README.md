@@ -104,10 +104,10 @@ use $ inferno pull to get a list of existing snippets and their ids
 
 create a file in project directory
 ```
-inferno.config.js
+sample.inferno.config.js
 ```
 
-*example contents of inferno.config.js*
+*example contents of sample.inferno.config.js*
 ```
 module.exports = {
   projects: [
@@ -138,5 +138,5 @@ you want to push up as a snippet example <novowidget></novowidget> = 'novowidget
 
 
 ## IMPORTANT ##
-Since **inferno.config.js** contains usernames and passwords, be sure to keep the file 
+Since **sample.inferno.config.js** contains usernames and passwords, be sure to keep the file 
 locally secure and add it to gitgnore or other repo ignore systems.

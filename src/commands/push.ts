@@ -9,7 +9,8 @@ const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-const beautify = require('js-beautify').html;
+// beautify currently breaks files with liquid in them we will skipp doing this for now
+// const beautify = require('js-beautify').html;
 
 export default class Push extends Command {
   static description = 'Push code snippets to Inferno AR Instance associated with your login'
@@ -115,13 +116,8 @@ export default class Push extends Command {
   private getSnippetCode(fileName: string) {
     const contents = fs.readFileSync(this.getFullPath(fileName)).toString();
     const $ = cheerio.load(contents);
-    const rawCode = $(this.util.wrapperElement).html();
+    return $(this.util.wrapperElement).html();
 
-    if(fileName.includes('liquid')) {
-      return rawCode;
-    }
-
-    return beautify(rawCode);
   }
 
 }
