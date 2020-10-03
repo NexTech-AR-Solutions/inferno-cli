@@ -1,6 +1,6 @@
 {
   "name": "inferno-cli",
-  "description": "command line tool for working with Inferno AR Virtual Event Platform",
+  "description": "a command line tool for working with Inferno AR Virtual Event Platform. pulls snippet info from system and allows you to generate local files for testing an push the code snippets back up to the platform",
   "version": "0.0.1",
   "author": "burkeallen",
   "bin": {
@@ -16,6 +16,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cli-ux": "^5.5.0",
     "cosmiconfig": "^7.0.0",
+    "file-set": "^4.0.1",
     "fs-extra": "^9.0.1",
     "js-beautify": "^1.13.0",
     "moment": "^2.29.0",

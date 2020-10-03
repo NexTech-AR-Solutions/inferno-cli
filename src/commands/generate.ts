@@ -10,57 +10,69 @@ export default class Generate extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    project: flags.string({char: 'p', description: 'project to create file in'}),
-    file: flags.string({char: 'f', description: 'file name to create in the project folder'}),
+    project: flags.string({char: 'p', description: 'directory for project. Will be created if it does not already exist. The project name needs to exist in inferno.config.js file'}),
+    file: flags.string({char: 'f', description: 'file name to create. Will be created under project folder'}),
     test: flags.boolean({char: 't', default: false, description: 'set to test'}),
   }
-  static args = [{name: 'project'}, {name: 'file'}, {name: 'test', default: false}];
+  static args = [{name: 'project'}, {name: 'file'}];
   util: NovoUtils = new NovoUtils();
+  name: string;
+  file: string;
 
   async run() {
     const {args, flags} = this.parse(Generate)
 
-    const projectName = flags.project ?? args.project;
-    let filename = flags.file ?? args.file;
+    this.name = flags.project ?? args.project;
+    this.file = flags.file ?? args.file;
 
-    if (!filename.includes('.html')) {
-      filename += '.html';
+    if (!this.file.includes('.html')) {
+      this.file += '.html';
     }
 
-    const project = await this.util.getConfig(projectName);
-    const templateTargetPath = path.join(this.util.basePath, projectName, filename);
-    const cssTargetPath = path.join(this.util.basePath, projectName, 'inferno-client.css');
+    const project = await this.util.getConfig(this.name);
+    const templateTargetPath = path.join(this.util.basePath, project.name, this.file);
+    const cssTargetPath = path.join(this.util.basePath, project.name, 'inferno-client.css');
+    const jsonTargetPath = path.join(this.util.basePath, project.name, 'liquid.json');
 
-    if (flags.test || args.test) {
+    if (flags.test) {
       this.log(chalk.yellow('\ngenerating new Inferno AR Code Snippet template file '), chalk.blue(templateTargetPath));
       if (fs.existsSync(templateTargetPath)) {
         this.log(chalk.magentaBright('WARNING'), chalk.yellow('file would not be generated, it already exists'));
       }
-      this.log('\n');
+      this.log('\n ');
       return;
     }
 
     const templatePath = path.join(__dirname, '../assets/template.html');
     const css = path.join(__dirname, '../assets/inferno-client.css');
+    const json = path.join(__dirname, '../assets/liquid.json');
 
-    try {
-      this.log('copying from ' + templatePath, ' to ' + templateTargetPath);
+    fs.copy(templatePath, templateTargetPath, {overwrite: false, errorOnExist: true})
+      .then(() => {
+        this.log(chalk.greenBright(`\nFile ${templateTargetPath} Generated`));
+        this.log('\n ');
+      })
+      .catch((err: any) => {
+        this.log(chalk.red('\n', err));
+        this.log('\n ');
+      })
 
-      fs.copySync(templatePath, templateTargetPath, {
-        overwrite: false,
-        errorOnExist: true,
-      });
-      this.log('copying from ' + css, ' to ' + cssTargetPath);
-      fs.copySync(css, cssTargetPath, {
-        overwrite: false,
-        errorOnExist: false,
-      });
-      this.log(chalk.yellowBright('\nGENERATED '), chalk.magentaBright(templateTargetPath));
-    } catch (e) {
-      this.log(chalk.red('\n', e));
-    }
+    fs.copy(css, cssTargetPath, {overwrite: false, errorOnExist: true})
+      .then(() => {
+        this.log(chalk.greenBright(`\nFile ${cssTargetPath} Generated`));
+      })
+      .catch((err: any) => {
+        // do nothing
+      })
 
-    this.log('\n');
+    fs.copy(json, jsonTargetPath, {overwrite: false, errorOnExist: true})
+      .then(() => {
+        this.log(chalk.greenBright(`\nFile ${jsonTargetPath} Generated`));
+      })
+      .catch((err: any) => {
+        // do nothing
+      })
+
 
   }
 

@@ -3,50 +3,47 @@ const path = require('path');
 const chalk = require('chalk');
 const {cosmiconfig} = require('cosmiconfig');
 
+export type Project = {
+  name: string,
+  username: string,
+  password: string,
+  wrapperElement?: string
+}
+
 export default class NovoUtils {
 
-  basePath: string | undefined;
+  basePath: string = './';
   wrapperElement: string | null | undefined;
   username: string | null | undefined;
-  
 
-  public async getConfig(projectName: string) {
+  public async getConfig(name: string) : Promise<Project> {
     const explorer = cosmiconfig('inferno');
     const cosmic = await explorer.search();
 
     if (cosmic === null) {
-      notifier.notify({
-        title: 'CONFIG ERROR',
-        message: 'Looks like inferno.config.js config file is missing',
-        icon: path.join(__dirname, '../assets/error-icon.png'),
-      });
-      console.error(chalk.red('ERROR') + ' ' + 'Looks like inferno.config.js is missing');
-      return;
+      console.error(chalk.red('ERROR getConfig()') + ' Looks like inferno.config.js is missing');
+      throw Error;
     }
 
     this.basePath = path.parse(cosmic.filepath).dir;
-    const conf = this.getProjectConfig(cosmic, projectName);
-    this.wrapperElement = conf.wrapperElement;
+    const conf: Project = this.getProjectConfig(cosmic, name);
+    this.wrapperElement = conf.wrapperElement ?? 'inferno-snippet-content';
     this.username = conf.username;
     return conf;
 
   }
 
-  private getProjectConfig(cosmic: any, projectName: string) {
+  private getProjectConfig(cosmic: any, name: string) : Project {
     let projects = cosmic.config.projects;
-    let project = projects.filter((item: any) => {
-      return item.name.toLowerCase() === projectName.toLowerCase()
+    let project: [Project] = projects.filter((item: any) => {
+      return item.name.toLowerCase() === name.toLowerCase()
     });
 
     if (!project.length) {
-      notifier.notify({
-        title: 'NO PROJECT',
-        message: 'Project ' + projectName + ' does not exist in the config file',
-        icon: path.join(__dirname, '../assets/error-icon.png'),
-      });
-      console.error(chalk.red('ERROR') + ' ' + 'Project ' + projectName + ' does not exist in the config file');
-      return {};
+      console.error(chalk.red('ERROR') + ' ' + 'Project ' + name + ' does not exist in the config file');
+      throw Error;
     }
     return project[0];
   }
 }
+

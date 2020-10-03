@@ -1,0 +1,239 @@
+[{
+  "CurrentViewingUser": {
+    "Id": "d2504464-b18e-48ac-8fb4-48310fda26d0",
+    "Email": "jimmy@mailinator.com",
+    "FirstName": "Jimmy",
+    "LastName": "Allen",
+    "UserGroups": [
+      {
+        "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+        "Name": "Admin"
+      },
+      {
+        "Id": "e7312e84-c55f-46a0-fc96-08d83f9b5a9a",
+        "Name": "Public"
+      }
+    ]
+  },
+  "CurrentlyViewedCategory": {
+    "Id": "9cb34389-b2e9-400a-53a9-08d861d8a48a",
+    "Name": "Liquid Data Test",
+    "Weight": 0,
+    "LandingPageSnippetId": "faab27f5-866c-4af5-b472-69ba6c5a85ea"
+  },
+  "Events": [
+    {
+      "Id": "b192d9a2-b29f-4633-a9ab-10f82ccef217",
+      "Name": "Sample Video For Testing",
+      "Description": "",
+      "StartTime": "2020-08-14T00:00:00-04:00",
+      "VideoThumbnail": "https://origin.infernocore.jolokia.com/thumb/clients/d3cbabfb-77f3-44ad-f14d-08d83f9b4a40/b192d9a2-b29f-4633-a9ab-10f82ccef217/results/encoder/6b9dffa1-00bd-4b91-afc9-2b7dce16e8eb/b192d9a2-b29f-4633-a9ab-10f82cce_adaptive6.mp4/thumb-12000.jpg",
+      "VideoDuration": 172,
+      "Categories": [
+        {
+          "Id": "9cb34389-b2e9-400a-53a9-08d861d8a48a",
+          "Name": "Liquid Data Test",
+          "Weight": 0,
+          "LandingPageSnippetId": "faab27f5-866c-4af5-b472-69ba6c5a85ea"
+        }
+      ],
+      "Attachments": [],
+      "FirstCategoryId": "d045347d-8a3e-4b2b-74d0-08d842be8c0c"
+    }
+  ],
+  "Categories": [
+    {
+      "Id": "9cb34389-b2e9-400a-53a9-08d861d8a48a",
+      "Name": "Liquid Data Test",
+      "Weight": 0,
+      "LandingPageSnippetId": "faab27f5-866c-4af5-b472-69ba6c5a85ea"
+    },
+    {
+      "Id": "ec603c54-875d-4aa1-527f-08d83f9b50d8",
+      "Name": "Public",
+      "Weight": 150,
+      "LandingPageSnippetId": "4fad2314-d04f-429e-8d99-b38e2e227cd5"
+    }
+   ],
+  "UserProfiles": [
+    {
+      "Id": "8c8121be-20dd-4904-52e0-08d83fa1f53e",
+      "UserId": "d2504464-b18e-48ac-8fb4-48310fda26d0",
+      "Bio": "some really simple bio content for Jimmy",
+      "FirstName": "Jimmy",
+      "Lastname": "Allen",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        },
+        {
+          "Id": "e7312e84-c55f-46a0-fc96-08d83f9b5a9a",
+          "Name": "Public"
+        }
+      ],
+      "SocialFacebook": "https://facebook.com",
+      "SocialYoutube": "https://youtube.com",
+      "SocialLinkedIn": "https://www.linkedin.com/",
+      "SocialInstagram": "https://instragram.com",
+      "SocialTwitter": "https://twitter.com",
+      "ContactInfoPhone": "555-555-1234",
+      "ContactInfoCompany": "Acme International",
+      "ContactInfoTitle": "My Job Title",
+      "ContactInfoEmail": "jimmy.z@mailinator.com",
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": ""
+    },
+    {
+      "Id": "805b8add-4018-4ba0-55b6-08d865e49203",
+      "UserId": "63f53e82-74cf-4dc5-a7b4-37170039d25d",
+      "Bio": "bio",
+      "FirstName": "Francesca",
+      "Lastname": "Molinary",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        }
+      ],
+      "SocialFacebook": "",
+      "SocialYoutube": "",
+      "SocialLinkedIn": "",
+      "SocialInstagram": null,
+      "SocialTwitter": "",
+      "ContactInfoPhone": null,
+      "ContactInfoCompany": null,
+      "ContactInfoTitle": null,
+      "ContactInfoEmail": null,
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": null
+    },
+    {
+      "Id": "af7df2c4-12f2-4691-55b5-08d865e49203",
+      "UserId": "a171d2dd-a043-4890-a883-7e0c3a54e852",
+      "Bio": "bio",
+      "FirstName": "Rocky",
+      "Lastname": "Balboa",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        }
+      ],
+      "SocialFacebook": "socialFacebook",
+      "SocialYoutube": "socialYoutube",
+      "SocialLinkedIn": "socialLinkedIn",
+      "SocialInstagram": null,
+      "SocialTwitter": "socialTwitter",
+      "ContactInfoPhone": null,
+      "ContactInfoCompany": null,
+      "ContactInfoTitle": null,
+      "ContactInfoEmail": null,
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": null
+    },
+    {
+      "Id": "9e43a921-22fd-4dbe-661f-08d865e68b68",
+      "UserId": "c8a7e4ce-62c4-464f-a47f-b303e0d5d9b3",
+      "Bio": null,
+      "FirstName": "Molly",
+      "Lastname": "Holly",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        },
+        {
+          "Id": "e7312e84-c55f-46a0-fc96-08d83f9b5a9a",
+          "Name": "Public"
+        }
+      ],
+      "SocialFacebook": null,
+      "SocialYoutube": null,
+      "SocialLinkedIn": null,
+      "SocialInstagram": null,
+      "SocialTwitter": null,
+      "ContactInfoPhone": null,
+      "ContactInfoCompany": null,
+      "ContactInfoTitle": null,
+      "ContactInfoEmail": null,
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": null
+    },
+    {
+      "Id": "2485dfcc-a0ed-4a1e-ad19-08d8424f3365",
+      "UserId": "f478576b-4c3e-4193-8f9e-66ee2ed5dba4",
+      "Bio": "This is my Bio",
+      "FirstName": "Steven",
+      "Lastname": "Thompson",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        },
+        {
+          "Id": "e7312e84-c55f-46a0-fc96-08d83f9b5a9a",
+          "Name": "Public"
+        }
+      ],
+      "SocialFacebook": null,
+      "SocialYoutube": null,
+      "SocialLinkedIn": "",
+      "SocialInstagram": null,
+      "SocialTwitter": null,
+      "ContactInfoPhone": null,
+      "ContactInfoCompany": "Wonderbread",
+      "ContactInfoTitle": "System Admin",
+      "ContactInfoEmail": "steve@mailinator.com",
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": ""
+    },
+    {
+      "Id": "baf98227-4180-44f5-55b3-08d865e49203",
+      "UserId": "dda8b5a7-af4a-4ebf-8b19-eea2df6217c7",
+      "Bio": "This is the bio field",
+      "FirstName": "Taylor",
+      "Lastname": "Wilson",
+      "UserGroups": [],
+      "SocialFacebook": "www.google.com",
+      "SocialYoutube": null,
+      "SocialLinkedIn": null,
+      "SocialInstagram": null,
+      "SocialTwitter": null,
+      "ContactInfoPhone": null,
+      "ContactInfoCompany": null,
+      "ContactInfoTitle": null,
+      "ContactInfoEmail": null,
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": null
+    },
+    {
+      "Id": "ad8e338c-1fb3-4d42-1c00-08d83fdd171e",
+      "UserId": "070ec54e-7305-4ee0-bb6a-c1404afaf75c",
+      "Bio": "This is my bio.",
+      "FirstName": "Allen",
+      "Lastname": "Vonderfeld",
+      "UserGroups": [
+        {
+          "Id": "a92e82e6-38de-4b2d-d930-08d83f9b62f2",
+          "Name": "Admin"
+        },
+        {
+          "Id": "e7312e84-c55f-46a0-fc96-08d83f9b5a9a",
+          "Name": "Public"
+        }
+      ],
+      "SocialFacebook": null,
+      "SocialYoutube": null,
+      "SocialLinkedIn": "www.google.com",
+      "SocialInstagram": null,
+      "SocialTwitter": null,
+      "ContactInfoPhone": "5551237890",
+      "ContactInfoCompany": "Nunya Business",
+      "ContactInfoTitle": "Relationship Manager",
+      "ContactInfoEmail": "vonderfeld@mailinator.com",
+      "HideProfilePrivacyOptOut": false,
+      "ContactCalendarLink": null
+    }
+  ]
+}]
