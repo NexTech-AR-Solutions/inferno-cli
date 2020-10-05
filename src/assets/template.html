@@ -2,9 +2,6 @@
 <html lang="en"
       class="bgpositionshorthand bgpositionxy bgrepeatround bgrepeatspace bgsizecover borderradius cssanimations csscalc csstransforms supports csstransforms3d preserve3d csstransitions no-flexboxtweener fontface svg svgasimg svgclippaths svgfilters svgforeignobject inlinesvg smil localstorage sessionstorage websqldatabase multiplebgs"
       style='--branding-primary:#1e5194; --sidebar-bg-color:#3c5a81;'>
-
-</html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +22,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
   <!-- Liquid Templating -->
   <script src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.min.js"></script>
+  <!--  Load Liquid JSON From Local file -->
+  <script>
+    function loadJSON(file, callback) {
+
+      const xobj = new XMLHttpRequest()
+      xobj.overrideMimeType('application/json')
+      xobj.open('GET', file, false) // Replace 'my_data' with the path to your file
+      xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == '200') {
+          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+          callback(xobj.responseText)
+        }
+      }
+      xobj.send(null)
+    }
+
+    // Insert your liquid data here. Remember to convert from JSON to JS Object (use https://json-to-js.com/ or similar)
+    // Set data object to null to skip Liquid processing. You probably want to do this if you're not using liquid as the
+    // processing can potentially interfere with scripts that run on page load.
+    var data = {}
+    loadJSON('../liquid.json', function (response) {
+      // Parse JSON string into object
+      const x = JSON.parse(response)
+      data = x[0]
+    })
+
+  </script>
   <script>
     let landingPageEl = null
   </script>
@@ -42,12 +66,14 @@
           <div class="navbar-header">LOCAL</div>
           <div class="ellipsis ng-star-inserted" flex="" layout="row" layout-align="start center">
             <button class="menu-btn mat-icon-button ng-star-inserted" hide="" mat-icon-button="" show-gt-sm=""
-                    trigger-resize="" onclick="mtTriggerMenu()"><span class="mat-button-wrapper">
-                  <mat-icon class="mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">menu
+                    trigger-resize="" onclick="mtTriggerMenu()">
+              <span class="mat-button-wrapper">
+                  <mat-icon class="mat-icon material-icons mat-icon-no-color" role="img" aria-hidden="true">
+                    menu
                   </mat-icon>
-                </span>
+              </span>
             </button>
-            <div _ngcontent-inv-c7="" class="mat-title ellipsis m0" flex="" title="Page Title">< Page Title</div>
+            <div _ngcontent-inv-c7="" class="mat-title ellipsis m0" flex="" title="Page Title">Sample Page Title</div>
           </div>
         </mat-toolbar>
       </app-header>
@@ -64,16 +90,16 @@
       </videos-sidebar>
       <!-- ./ SIDEBAR -->
       <!-- LANDING -->
-      <section class="IE-FlexAuto" flex="" style='border: 2px none red;'>
+      <section class="IE-FlexAuto" flex="">
         <div class="content-wrapper">
           <landing-page class="ng-star-inserted">
-            <div mutationobserver="" id="landing">
+            <div id="landing">
               <!-- CREATE SHADOW DOM AND ATTACH STYLES -->
               <script>
-                landingPageEl = document.querySelector('landing-page').attachShadow({mode: 'open'})
-                const landing = landingPageEl.appendChild(document.getElementById('landing'))
-                landingPageEl.appendChild(landing)
-                var loginPageEl = landingPageEl
+                landingPageEl = document.querySelector('landing-page').attachShadow({mode: 'open'});
+                const landing = landingPageEl.appendChild(document.getElementById('landing'));
+                landingPageEl.appendChild(landing);
+                const loginPageEl = landingPageEl;
               </script>
               <style type="text/css">
                 @import url("https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-shadow-styles.css");
@@ -82,36 +108,36 @@
               <!-- ********************* -->
               <!-- ********************* -->
               <!-- SNIPPET CONTENT START -->
-              <inferno-snippet-content id="put-code-snippet-id-here">
+              <inferno-snippet-content id="xxxxxxxxx-xxxxxx-xxxxxxxxx-xxxxxxxx">
 
-                  <style>
-                    /* prevent entire screen from going black if you try to reference an image that does not exist*/
-                    /* apparently some style or JS that is setting a style do that somewhere else in the inferno system*/
-                    img::after {
-                      content: none;
-                    }
+                <style>
+                  /* prevent entire screen from going black if you try to reference an image that does not exist*/
+                  /* apparently some style or JS that is setting a style do that somewhere else in the inferno system*/
+                  img::after {
+                    content: none;
+                  }
 
-                    .content {
-                      background-image: url('https://pixabay.com/get/55e0d7424a55ae14f6da8c7dda353678153edce65650774b_1280.jpg');
-                      background-attachment: fixed;
-                      background-repeat: no-repeat;
-                      background-size: cover;
-                      background-position: center;
-                      min-height: calc(100vh - 114px);
-                      margin: -20px;
-                      padding: 20px 24px;
-                      z-index: 1;
-                      font-family: Verdana, sans-serif !important;
-                    }
-                  </style>
+                  .content {
+                    background-image: url('https://pixabay.com/get/55e0d7424a55ae14f6da8c7dda353678153edce65650774b_1280.jpg');
+                    background-attachment: fixed;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                    min-height: calc(100vh - 114px);
+                    margin: -20px;
+                    padding: 20px 24px;
+                    z-index: 1;
+                    font-family: Verdana, sans-serif !important;
+                  }
+                </style>
 
-                  <div class="content">
+                <div class="content">
 
-                    <h2>Liquid Parsing Template</h2>
-                    <p><strong>This is text from the data object:</strong> {{ data.sample }}</p>
-                    <p><strong>This is the data object:</strong> {{ data | json }} </p>
+                  <h2>Liquid Parsing Template</h2>
+                  <p><strong>This is text from the data object:</strong> {{ data.sample }}</p>
+                  <p><strong>This is the data object:</strong> {{ data | json }} </p>
 
-                  </div>
+                </div>
 
               </inferno-snippet-content>
               <!--  SNIPPET CONTENT END  -->
@@ -136,11 +162,6 @@
 
 <!-- Menu Collapse Script -->
 <script>
-
-  // Insert your liquid data here. Remember to convert from JSON to JS Object (use https://json-to-js.com/ or similar)
-  // Set data object to null to skip Liquid processing. You probably want to do this if you're not using liquid as the
-  // processing can potentially interfere with scripts that run on page load.
-  var data = {sample: 'This is a string from the Liquid data object'}
 
   // LIQUID PROCESSING (Set the data variable above)
   function processLiquid() {
@@ -218,12 +239,29 @@
     const qaDiv = landingPageEl.querySelector('#inferno-questions-basic')
     const videoDiv = landingPageEl.querySelector('#inferno-video-player')
     if (qaDiv) {
-      $(qaDiv).append(`<questions _nghost-qch-c20=""><div _ngcontent-qch-c20="" novalidate="" class="ng-untouched ng-pristine ng-valid ng-star-inserted"><div _ngcontent-qch-c20="" class="inferno-input-group"><span _ngcontent-qch-c20="" class="inferno-input-group-addon">Ask A Question</span><input _ngcontent-qch-c20="" class="inferno-form-control ng-untouched ng-pristine ng-valid" formcontrolname="question" type="text"><span _ngcontent-qch-c20="" class="inferno-input-group-btn"><button _ngcontent-qch-c20="" class="inferno-btn" type="button">Submit</button></span></div></div></questions>`,
-      )
+      $(qaDiv).append(`
+      <questions _nghost-qch-c20="">
+        <div class="ng-untouched ng-pristine ng-valid ng-star-inserted">
+          <div class="inferno-input-group">
+            <span class="inferno-input-group-addon">Ask A Question</span>
+            <input class="inferno-form-control ng-untouched ng-pristine ng-valid" type="text">
+            <span class="inferno-input-group-btn">
+              <button class="inferno-btn" type="button">Submit</button>
+            </span>
+          </div>
+        </div>
+      </questions>
+      `)
     }
     if (videoDiv) {
-      $(videoDiv).append(
-        `<iframe width="640" height="360" src="https://jolokia.inferno.jolokia.com/embed/ecd7f4ad-2c0a-4f3f-bfd6-37670cc2edbd" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>`)
+      $(videoDiv).append(`
+        <iframe src="https://jolokia.inferno.jolokia.com/embed/ecd7f4ad-2c0a-4f3f-bfd6-37670cc2edbd"
+          width="640"
+          height="360"
+          frameborder="0"
+          allowfullscreen">
+        </iframe>
+        `)
     }
   }
 
@@ -236,5 +274,6 @@
   }
 
 </script>
+
 
 </html>
