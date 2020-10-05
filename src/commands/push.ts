@@ -39,14 +39,12 @@ export default class Push extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    project: flags.string({char: 'p', description: Push.paramDesc.project}),
-    file: flags.string({char: 'f', description: Push.paramDesc.file}),
     comment: flags.string({char: 'c', default: "Updated via inferno-cli", description: Push.paramDesc.comment}),
     update: flags.boolean({char: 'u', default: false, description: Push.paramDesc.update}),
   }
 
   static args = [
-    {name: 'project', required: true, description: Push.paramDesc.file},
+    {name: 'project', required: true, description: Push.paramDesc.project},
     {name: 'file', required: true, description: Push.paramDesc.file},
   ]
 
@@ -61,9 +59,9 @@ export default class Push extends Command {
     const {args, flags} = this.parse(Push);
 
     this.log(this.message.starting);
-    this.project = await this.util.getConfig(flags.project ?? args.project);
+    this.project = await this.util.getConfig(args.project);
     this.comment = flags.comment;
-    this.snippets = this.getSnippets(flags.file ?? args.file);
+    this.snippets = this.getSnippets(args.file);
 
     if (!flags.update) {
       this.displaySnippets();
