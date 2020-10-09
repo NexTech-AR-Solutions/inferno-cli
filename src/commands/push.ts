@@ -174,7 +174,7 @@ export default class Push extends Command {
 
   private getSnippet(file: string): Snippet {
     const contents = fs.readFileSync(file).toString();
-    const $ = cheerio.load(contents);
+    const $ = cheerio.load(contents,  {decodeEntities: false});
     const wrapper = $(this.util.wrapperElement);
     return {
       file: file,
