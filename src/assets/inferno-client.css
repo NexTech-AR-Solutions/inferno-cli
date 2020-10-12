@@ -1,10 +1,10 @@
 :root {
   /* client project branding colors*/
-  --branding-primary: #2b5fb8;
-  --sidebar-bg-color: #1f4586;
-  --sidebar-highlight-bg-color: #2b5fb8;
-  --sidebar-text-color: #ffffff;
-  --sidebar-highlight-text-color: #ffffff;
+  --branding-primary: #2b5fb8 !important;
+  --sidebar-bg-color: #1f4586 !important;
+  --sidebar-highlight-bg-color: #2b5fb8 !important;
+  --sidebar-text-color: #ffffff !important;
+  --sidebar-highlight-text-color: #ffffff !important;
 
   /* jolokia platform colors*/
   --branding-success: #4CAF50;
@@ -15,7 +15,7 @@
 }
 
 /* adjustment for left sidebar navigation menu since it is just a mockup */
-.sidebar>.nav li {
+.sidebar > .nav li {
   margin-top: 40px;
   margin-left: 12px;
   color: var(--sidebar-highlight-text-color);
