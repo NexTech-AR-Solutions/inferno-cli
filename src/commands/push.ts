@@ -130,20 +130,29 @@ export default class Push extends Command {
 
   private putSnippets(snippet: any) {
     if (!snippet.code) {
-      const warningMessage = chalk.red('Skipping -') +
+      const warningMessage = chalk.yellowBright('Skipping -') +
         chalk.reset(' no code snippet exists or element ') +
         chalk.yellowBright(` <${this.util.wrapperElement}> `) +
         chalk.reset(` does not exist in ${snippet.file}`);
-      this.log(chalk.yellowBright('WARNING : '), warningMessage);
+      this.log(chalk.red('WARNING : '), warningMessage);
       return;
     }
 
     if (!snippet.id) {
-      const warningMessage = chalk.red('Skipping -') +
+      const warningMessage = chalk.yellowBright('Skipping -') +
         chalk.reset(` code snippet id does not exist on element `) +
         chalk.yellowBright(` <${this.util.wrapperElement} id=""> `) +
         chalk.reset(` in ${snippet.file}`);
-      this.log(chalk.yellowBright('WARNING : '), warningMessage);
+      this.log(chalk.red('WARNING : '), warningMessage);
+      return;
+    }
+
+    if (snippet.id.includes('xxxxx')) {
+      const warningMessage = chalk.yellowBright('Skipping -') +
+        chalk.reset(` code snippet id is not valid `) +
+        chalk.yellowBright(snippet.id) +
+        chalk.reset(` in ${snippet.file}`);
+      this.log(chalk.red('WARNING : '), warningMessage);
       return;
     }
 
