@@ -32,7 +32,7 @@ export default class Pull extends Command {
 
     this.log(chalk.blue('Starting to Pull Snippets for ') + chalk.red(project.name));
     const inferno = new InfernoAPI();
-    await inferno.init(project.username, project.password);
+    await inferno.init(project.username, project.password, project.domain);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
     const snippets = await inferno.fetchSnippets();
 

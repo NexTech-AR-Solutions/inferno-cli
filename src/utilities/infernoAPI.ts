@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const chalk = require('chalk');
 
 export class InfernoAPI {
@@ -7,14 +8,29 @@ export class InfernoAPI {
   accessToken: string | undefined;
   clientId: string | undefined;
   userRoles: Array<string> | undefined;
+  domain: string | undefined;
 
   constructor() {
   }
 
-  async init(username: string | undefined, password: string | undefined) {
+  async init(username: string | undefined, password: string | undefined, domain: string | undefined) {
+    this.domain = domain;
+    console.log('domain', domain);
     const endPoint = 'token';
     const url = InfernoAPI.baseUrl + endPoint;
-    const response = await axios.post(url, {email: username, password: password,});
+    const response: any = await axios.post(url, {
+        email: username,
+        password: password,
+      },
+      {
+        headers: {
+          'X-InfernoCore-Domain': this.domain
+        }
+      }
+    ).then(resp => resp)
+      .catch(err => {
+        console.log('Error Authenticating', err);
+      });
     this.accessToken = `Bearer ${response.data.AccessToken}`;
     this.userRoles = response.data.Roles;
     this.clientId = response.data.ClientId;
@@ -23,9 +39,11 @@ export class InfernoAPI {
   public async fetchSnippets() {
     const endPoint = 'Snippets';
     const url = InfernoAPI.baseUrl + endPoint;
+    console.log('domain', this.domain);
     return await axios.get(url, {
       headers: {
-        Authorization: this.accessToken
+        Authorization: this.accessToken,
+        'X-InfernoCore-Domain': this.domain
       }
     })
       .then(res => res.data)
@@ -41,7 +59,8 @@ export class InfernoAPI {
     const url = InfernoAPI.baseUrl + endPoint;
     return await axios.post(url, snippet, {
       headers: {
-        Authorization: this.accessToken
+        Authorization: this.accessToken,
+        'X-InfernoCore-Domain': this.domain
       }
     })
       .then(res => res.data)

@@ -69,7 +69,7 @@ export default class Push extends Command {
       return;
     }
 
-    await this.inferno.init(this.project.username, this.project.password);
+    await this.inferno.init(this.project.username, this.project.password, this.project.domain);
     this.snippets.forEach((snippet: any) => {
       this.putSnippets(snippet);
     })

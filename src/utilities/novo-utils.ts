@@ -7,7 +7,8 @@ export type Project = {
   name: string,
   username: string,
   password: string,
-  wrapperElement?: string
+  wrapperElement?: string,
+  domain: string
 }
 
 export default class NovoUtils {
@@ -15,8 +16,9 @@ export default class NovoUtils {
   basePath: string = './';
   wrapperElement: string | null | undefined;
   username: string | null | undefined;
+  domain: string | undefined;
 
-  public async getConfig(name: string) : Promise<Project> {
+  public async getConfig(name: string): Promise<Project> {
     const explorer = cosmiconfig('inferno');
     const cosmic = await explorer.search();
 
@@ -29,11 +31,12 @@ export default class NovoUtils {
     const conf: Project = this.getProjectConfig(cosmic, name);
     this.wrapperElement = conf.wrapperElement ?? 'inferno-snippet-content';
     this.username = conf.username;
+    this.domain = conf.domain;
     return conf;
 
   }
 
-  private getProjectConfig(cosmic: any, name: string) : Project {
+  private getProjectConfig(cosmic: any, name: string): Project {
     let projects = cosmic.config.projects;
     let project: [Project] = projects.filter((item: any) => {
       return item.name.toLowerCase() === name.toLowerCase()
