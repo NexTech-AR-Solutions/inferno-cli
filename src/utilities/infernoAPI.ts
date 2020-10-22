@@ -15,7 +15,6 @@ export class InfernoAPI {
 
   async init(username: string | undefined, password: string | undefined, domain: string | undefined) {
     this.domain = domain;
-    console.log('domain', domain);
     const endPoint = 'token';
     const url = InfernoAPI.baseUrl + endPoint;
     const response: any = await axios.post(url, {
@@ -39,7 +38,6 @@ export class InfernoAPI {
   public async fetchSnippets() {
     const endPoint = 'Snippets';
     const url = InfernoAPI.baseUrl + endPoint;
-    console.log('domain', this.domain);
     return await axios.get(url, {
       headers: {
         Authorization: this.accessToken,

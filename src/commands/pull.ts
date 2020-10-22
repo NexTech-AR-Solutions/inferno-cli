@@ -28,9 +28,7 @@ export default class Pull extends Command {
     const project = await util.getConfig(args.project);
 
     // log into inferno and fetch the snippets
-    cli.action.start('Fetching Snippets', 'initializing', {stdout: true})
-
-    this.log(chalk.blue('Starting to Pull Snippets for ') + chalk.red(project.name));
+    this.log(chalk.blue('Starting to Pull Snippets for ') + chalk.yellowBright(project.domain));
     const inferno = new InfernoAPI();
     await inferno.init(project.username, project.password, project.domain);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
