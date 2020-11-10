@@ -5,31 +5,52 @@ a command line tool for working with Inferno AR Virtual Event Platform.
 pulls snippet info from system and allows you to generate local files for 
 testing an push the code snippets back up to the platform.
 
+# Initial install from source
+```sh-session
+$ sudo npm install 
+$ sudo npm run prepack
+$ sudo npm run postpack
+$ sudo npm link
+```
+
 # Usage
 <!-- usage -->
 ```sh-session
-$ unzip to any directory you want
-$ cd that Directory
-$ npm install
-$ npm link  (like npm install - will make it globally available, requires sudo on unix/mac os)
-
+$ npm install -g inferno-cli
 $ inferno COMMAND
 running command...
-
 $ inferno (-v|--version|version)
 inferno-cli/0.0.1 win32-x64 node-v12.14.0
-
 $ inferno --help [COMMAND]
 USAGE
-  $ inferno COMMAND ...
+  $ inferno COMMAND
+...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`inferno diff PROJECT`](#inferno-diff-project)
 * [`inferno generate [PROJECT] [FILE]`](#inferno-generate-project-file)
 * [`inferno help [COMMAND]`](#inferno-help-command)
 * [`inferno pull PROJECT`](#inferno-pull-project)
 * [`inferno push PROJECT FILE`](#inferno-push-project-file)
+
+## `inferno diff PROJECT`
+
+Compare local code snippets with snippets on the server
+
+```
+USAGE
+  $ inferno diff PROJECT
+
+ARGUMENTS
+  PROJECT  project name to compare snippets from
+
+EXAMPLE
+  $ inferno dif projectname
+```
+
+_See code: [src\commands\diff.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\diff.ts)_
 
 ## `inferno generate [PROJECT] [FILE]`
 
@@ -79,6 +100,10 @@ USAGE
 ARGUMENTS
   PROJECT  project name to pull from
 
+OPTIONS
+  -c, --create  create local template files from code snippets that exist on the server. Files will be placed in sub
+                directories based on snippet type. local files WILL BE OVERWRITTEN if they already exist
+
 EXAMPLE
   $ inferno pull projectname
 ```
@@ -94,14 +119,12 @@ USAGE
   $ inferno push PROJECT FILE
 
 ARGUMENTS
-  PROJECT  file name to push (relative to project dir) or *all to push all files in project sub dir
+  PROJECT  project/directory to push from
   FILE     file name to push (relative to project dir) or *all to push all files in project sub dir
 
 OPTIONS
   -c, --comment=comment  [default: Updated via inferno-cli] comment to add to snippet revision when pushed
-  -f, --file=file        file name to push (relative to project dir) or *all to push all files in project sub dir
   -h, --help             show CLI help
-  -p, --project=project  project/directory to push from
   -u, --update           if omitted, updates to the target system will not take place
 
 EXAMPLES
@@ -175,4 +198,3 @@ module.exports = {
 ## IMPORTANT ##
 Since **inferno.config.js** contains usernames and passwords, be sure to keep the file 
 locally secure and add it to gitgnore or other repo ignore systems.
-

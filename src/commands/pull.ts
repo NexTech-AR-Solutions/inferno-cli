@@ -21,7 +21,10 @@ export default class Pull extends Command {
   static args = [{name: 'project', required: true, description: 'project name to pull from'}];
   static flags = {
     // can pass either --create or -c
-    create: flags.boolean({char: 'c'}),
+    create: flags.boolean({
+      char: 'c',
+      description: 'create local template files from code snippets that exist on the server. Files will be placed in sub directories based on snippet type. local files WILL BE OVERWRITTEN if they already exist'
+    }),
   }
   util: NovoUtils = new NovoUtils();
 
@@ -87,23 +90,23 @@ export default class Pull extends Command {
       const template = path.join(__dirname, '../assets/template.html');
       const templateTargetPath = path.join(this.util.basePath, project.name, snippet.snippetType + '/' + snippet.name + '.html');
 
-        inferno.fetchLatestSnippetCode(snippet.id, snippet.name).then(item => {
-          if(!item || !item.snippet) return;
+      inferno.fetchLatestSnippetCode(snippet.id, snippet.name).then(item => {
+        if (!item || !item.snippet) return;
 
-          const contents = fs.readFileSync(template).toString();
-          const $ = cheerio.load(contents, {decodeEntities: false});
-          const wrapper = $(this.util.wrapperElement);
-          const newLine = '\n\r';
-          wrapper.attr('id', snippet.id);
-          wrapper.html(newLine + item.snippet + newLine);
-          const newContents = $('html').html();
-          fs.outputFile(templateTargetPath, newContents);
-          this.log(chalk.green('Created '), chalk.blue(templateTargetPath));
-        }).catch((err: any) => {
-           this.log(chalk.redBright('ERROR - unable to create file for '), templateTargetPath);
-           this.log(err);
+        const contents = fs.readFileSync(template).toString();
+        const $ = cheerio.load(contents, {decodeEntities: false});
+        const wrapper = $(this.util.wrapperElement);
+        const newLine = '\n\r';
+        wrapper.attr('id', snippet.id);
+        wrapper.html(newLine + item.snippet + newLine);
+        const newContents = $('html').html();
+        fs.outputFile(templateTargetPath, newContents);
+        this.log(chalk.green('Created '), chalk.blue(templateTargetPath));
+      }).catch((err: any) => {
+        this.log(chalk.redBright('ERROR - unable to create file for '), templateTargetPath);
+        this.log(err);
 
-          });
+      });
 
     })
   }
