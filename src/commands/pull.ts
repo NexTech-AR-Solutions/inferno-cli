@@ -31,7 +31,7 @@ export default class Pull extends Command {
   async run() {
 
     const {args, flags} = this.parse(Pull);
-    const message = new Messages();
+    const message = new Messages('PULL');
     this.log(message.starting);
 
     const project = await this.util.getConfig(args.project);

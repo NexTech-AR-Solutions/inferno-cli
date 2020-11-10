@@ -48,7 +48,7 @@ export default class Push extends Command {
     {name: 'file', required: true, description: Push.paramDesc.file},
   ]
 
-  message: Messages = new Messages();
+  message: Messages = new Messages('PUSH');
   util: NovoUtils = new NovoUtils();
   inferno: InfernoAPI = new InfernoAPI();
   snippets: Array<Snippet>;

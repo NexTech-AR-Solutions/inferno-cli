@@ -41,7 +41,7 @@ export default class Diff extends Command {
   async run() {
 
     const {args} = this.parse(Diff);
-    const message = new Messages();
+    const message = new Messages('DIFF');
     this.log(message.starting);
     this.project = await this.util.getConfig(args.project);
 
@@ -75,6 +75,9 @@ export default class Diff extends Command {
 
     });
 
+    this.log();
+    this.log('Checked (' + localSnippets.length + ') local snippets and (' + serverSnippets.length + ') Server Snippets');
+    this.log();
     this.log(message.finished);
   }
 
@@ -141,6 +144,7 @@ export default class Diff extends Command {
     });
 
     // stop the progress bar
+    progressBar.update(count++);
     progressBar.stop();
     return serverSnippets;
   }
