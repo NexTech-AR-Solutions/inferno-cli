@@ -1,10 +1,820 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      class="bgpositionshorthand bgpositionxy bgrepeatround bgrepeatspace bgsizecover borderradius cssanimations csscalc csstransforms supports csstransforms3d preserve3d csstransitions no-flexboxtweener fontface svg svgasimg svgclippaths svgfilters svgforeignobject inlinesvg smil localstorage sessionstorage websqldatabase multiplebgs"
+      style='--branding-primary:#1e5194; --sidebar-bg-color:#3c5a81;'>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Inferno Snippet Mockup Template</title>
+  <!-- Import Roboto -->
+  <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons"
+      rel="stylesheet">
+  <!-- Import Inferno's Styles -->
+  <link rel="stylesheet"
+        href="https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-base-styles.css">
+  <link rel="stylesheet"
+        href="https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-extra-styles.css">
+  <!--  Local/Client Color Overrides if they file exists -->
+  <link rel="stylesheet" href="../inferno-client.css">
+  <!-- Import JQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
 </head>
+
 <body>
+<!-- ********************* -->
+<!-- ********************* -->
+<!-- ********************* -->
+<!-- SNIPPET CONTENT START -->
+<inferno-snippet-content id="xxxxxxxxx-xxxxxx-xxxxxxxxx-xxxxxxxx">
+
+  <!--  Load custom fonts -->
+  <script type="text/javascript">
+    function loadFont(name, url) {
+      if (document.fonts.check('1em ' + name)) {
+        return
+      }
+      const fontFace = new FontFace(name, 'url(' + url + ')')
+
+      fontFace.load().then(function (loadedFont) {
+        document.fonts.add(loadedFont)
+        console.log('Loaded custom font ', name)
+      }).catch(function (error) {
+        // error occurred
+        console.log('Error loading ', name)
+      })
+
+    }
+
+    loadFont('CustomFont1', 'https://fonts.gstatic.com/s/oswald/v35/TK3iWkUHHAIjg752GT8G.woff2')
+
+  </script>
+
+  <style>
+    /* prevent entire screen from going black if you try to reference an image that does not exist*/
+    /* apparently some style or JS that is setting a style do that somewhere else in the inferno system*/
+    img::after {
+      content: none;
+    }
+
+    h1, h2, h3, h4, h5 {
+      /*font-family: "CustomFont1", sans-serif !important;*/
+      color: #2a59ae;
+    }
+
+    .content {
+      /* standard inferno static assets url = https://studio304nextechar.freetls.fastly.net/infernoAR/{projectname} */
+      /* s3 bucket assets url = https://inferno-event-assets.s3-us-west-2.amazonaws.com/{projectname} */
+      position: relative;
+      background-image: url('https://via.placeholder.com/1200x800/2A59AE/FFFFFF?text=Custom%20Background');
+      background-attachment: local;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: calc(100vh);
+      margin: 0;
+      padding: 20px 0;
+      z-index: 1;
+      font-family: "CustomFont1", sans-serif !important;
+    }
+  </style>
+
+  <!-- form -->
+  <style>
+    /* will get injected by inferno if errors */
+    .form-error-container {
+      width: 100%;
+      background-color: #242424ea;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-error-container p,
+    .form-error-container li {
+      padding: 8px;
+      color: var(--branding-warning);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 6fr 12fr;
+      grid-template-rows: 1fr;
+      gap: 0 0;
+      justify-content: center;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-card {
+      background-color: rgba(0, 0, 0, .5);
+      height: calc(100vh + 40px);
+      padding: 60px 40px;
+      text-align: center;
+      color: white;
+    }
+
+    form input, form select, form button {
+      width: 80%;
+      font-size: 1.2em;
+      line-height: 2em;
+      color: black;
+    }
+
+    input::placeholder {
+      color: #696969;
+    }
+
+    form button {
+      background-color: var(--branding-primary);
+      border: solid 1px var(--branding-primary);
+      font-size: 1.25em;
+      color: white;
+    }
+
+    form button:hover {
+      filter: brightness(110%);
+    }
+
+    .field div {
+      text-align: left;
+      margin-left: 40px;
+    }
+  </style>
+
+  <style>
+    .info {
+      width: 80%;
+      text-align: center;
+      margin: 20px 40px;
+    }
+
+    .event-logo {
+      width: 60%;
+      margin: 7% auto 5% auto;
+      background-color: rgba(255, 255, 255, .7);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .event-logo div {
+      font-size: 1.2em;
+    }
+
+    .event-logo img {
+      width: 80%;
+    }
+
+    .sponsor-container {
+      width: 90%;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, .3);
+      padding: 1px 20px 20px 20px;
+    }
+
+    .sponsor-container h2 {
+      margin: 10px;
+    }
+
+    .sponsor-list {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .sponsor {
+      display: flex;
+      align-items: center;
+      width: 200px;
+      height: 100px;
+      background-color: white;
+      margin: 8px;
+      padding: 8px;
+    }
+
+    .sponsor img {
+      align-self: center;
+    }
+
+    .sponsor:hover {
+      filter: brightness(80%);
+      transform: scale(1.1);
+    }
+
+    .sponsor a {
+      text-decoration: none;
+    }
+
+    .sponsor a:hover {
+      text-decoration: none;
+    }
+
+    .sponsor img {
+      width: 100%;
+    }
+
+
+  </style>
+
+  <!-- Form Validation Styles -->
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    /* Validation Styles */
+    .field-warning {
+      font-size: 1.2em;
+      color: #fa867e;
+      padding-left: 4px;
+
+    }
+
+    .is-invalid {
+      background-color: rgb(255, 188, 188);
+    }
+
+    .warning-shake {
+      /* Start the shake animation and make the animation last for 0.5 seconds */
+      animation: shake 0.5s;
+
+      /* When the animation is finished, start again */
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(1px, 1px) rotate(0deg);
+      }
+
+      10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+      }
+
+      20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+      }
+
+      30% {
+        transform: translate(3px, 2px) rotate(0deg);
+      }
+
+      40% {
+        transform: translate(1px, -1px) rotate(1deg);
+      }
+
+      50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+      }
+
+      60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+      }
+
+      70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+      }
+
+      80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+      }
+
+      90% {
+        transform: translate(1px, 2px) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+      }
+    }
+  </style>
+
+  <!--  Media Breaks  -->
+  <style>
+    @media only screen and (max-width: 1024px) {
+      .form-grid, .form-card, .sponsor-card {
+        display: block;
+        margin: 0 auto;
+        height: 100%;
+      }
+    }
+  </style>
+
+  <div class="content">
+
+    <div class="form-grid">
+      <div class="form-card">
+        <h1>Create A Digital Event Account</h1>
+        <form>
+
+          <!-- required fields -->
+          <div class="field" id="field-email">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="Email Address" name="email"/>
+          </div>
+
+          <div class="field" id="field-password">
+            <div><span class="field-warning"></span></div>
+            <input type="password" class="field-input" placeholder="New Password" name="password"/>
+          </div>
+
+          <div class="field" id="field-firstname">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="First Name" name="firstName"/>
+          </div>
+
+          <div class="field" id="field-lastname">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="Last Name" name="lastName"/>
+          </div>
+
+          <div class="field" id="field-company">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="Company" name="userData1Name"/>
+          </div>
+
+          <div class="field" id="field-industry">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="Industry" name="userData2Name"/>
+          </div>
+
+          <div class="field" id="field-job-title">
+            <div><span class="field-warning"></span></div>
+            <input type="text" class="field-input" placeholder="Job Title" name="userData3Name"/>
+          </div>
+
+
+          <div class="info">
+            Creating an account means you’ve read and accepted our
+            <a target="_blank" href="https://www.nextechar.com/nextech-ar-solutions-terms-and-conditions">
+              Terms of Use
+            </a>
+            and
+            <a target="_blank" href="https://www.nextechar.com/nextech-ar-solutions-privacy-policy">Privacy Policy</a>
+          </div>
+          <!-- Submit Buttons -->
+          <button type="button" id="validate-btn">Create Account</button>
+          <button type="button" class="hidden" id="submit-btn"></button>
+
+          <div class="info">
+            Have an account? <a href="/login">Sign in</a>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="sponsor-card">
+        <div class="event-logo">
+          <img src="https://via.placeholder.com/400x200/000000/FFFFFF?text=Custom%20Logo">
+          <div>Join us for our event</div>
+        </div>
+
+        <div class="sponsor-container">
+          <h2>Our Sponsors</h2>
+          <div class="sponsor-list">
+
+            <div class="sponsor">
+              <a target="_blank" href="#">
+                <img alt="sponsor 1"
+                     src="https://via.placeholder.com/200x100/FF0000/FFFFFF?text=Sponsor%20One">
+              </a>
+            </div>
+
+            <div class="sponsor">
+              <a target="_blank" href="#">
+                <img alt="sponsor 2"
+                     src="https://via.placeholder.com/200x100/0000FF/FFFFFF?text=Sponsor%20Two">
+              </a>
+            </div>
+
+            <div class="sponsor">
+              <a target="_blank" href="#">
+                <img alt="sponsor 3"
+                     src="https://via.placeholder.com/200x100/080000/FFFFFF?text=Sponsor%20Three">
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Init LandingElement -->
+  <script type="text/javascript">
+    // Check if landingPageEl is supplied
+    var landingElement
+    if ('landingPageEl' in window) {
+      landingElement = landingPageEl
+    } else {
+      landingElement = document
+    }
+  </script>
+
+  <!-- Setup Validation for Specific Fields -->
+  <script type="text/javascript">
+    // ** DEFINE VALIDATION HERE **
+    // FIELDS:
+    // validationFields (array): Define one object per field with the following properties.
+    // (Note that Selectors must be complete with . or # prefixes)
+    //
+    // - fieldSelector (string): Required selector for input field (input or checkbox)
+    // - warningClass (string): Required classname will be added to the field, the warningElSelector,
+    //                          and the warningGroupSelector when an error is found.
+    // - warningTextSelector (string): Required selector for element to insert error text
+    // - warningElSelector (string): Optional element to additionally apply warningClass
+    // - warningGroupSelector (string): Optional element to apply to a container if any one error is found.
+    //
+    // - validation (string): Optional special validation functions (currently: email, pass or phone)
+    // - required (bool): Optional field required not empty, (or must be checked if field is a checkbox)
+    // - minimumCharacters (int or null): Minimum # of chars, omit or null for no minimum
+    // - maximumCharacters (int or null): Maximum # of chars, omit or null for no maximum
+    // - matchField (string): Optionally specify another input field which this field must match.
+    // - displayName (string): Optional display name of field error (useful for grouped errors)
+    //
+    // CONFIG:
+    // Define a button which - when clicked - runs validation on all fields, and fires an
+    // event on any fields invalid or all fields valid.
+    //
+    // - validationButtonSelector (string): The button (or any element)
+    // - buttonActionOnValid (function): A function to run when valid
+    // - buttonActionOnInvalid (function): A function to run when invalid
+    //
+    // (Note: if using the validateShake function, ensure to include the required styles )
+    //
+    // MULTIPLE FORMS:
+    // Call validatorInitialize on page load with a separate config object and fields array
+    // for each set of fields requiring validation as a group.
+
+    var validationConfig = {
+      validateButtonSelector: '#validate-btn',
+      buttonActionOnValid: () =>
+        landingElement.querySelector('#submit-btn').dispatchEvent(new Event('click')),
+      buttonActionOnInvalid: () => validateShake('.is-invalid'),
+    }
+
+    var validationFields = [
+      {
+        fieldSelector: '#field-firstname input',
+        warningTextSelector: '#field-firstname .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        minimumCharacters: 3,
+      },
+      {
+        fieldSelector: '#field-lastname input',
+        warningTextSelector: '#field-lastname .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        minimumCharacters: 3,
+      },
+      {
+        fieldSelector: '#field-email input',
+        warningTextSelector: '#field-email .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        validation: 'email',
+      },
+      {
+        fieldSelector: '#field-password input',
+        warningTextSelector: '#field-password .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        validation: 'pass',
+        minimumCharacters: 6,
+      },
+      {
+        fieldSelector: '#field-company input',
+        warningTextSelector: '#field-company .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        minimumCharacters: 3,
+      },
+      {
+        fieldSelector: '#field-industry input',
+        warningTextSelector: '#field-industry .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        minimumCharacters: 3,
+      },
+      {
+        fieldSelector: '#field-job-title input',
+        warningTextSelector: '#field-job-title .field-warning',
+        warningClass: 'is-invalid',
+        required: true,
+        minimumCharacters: 3,
+      },
+    ]
+  </script>
+
+  <!-- VALIDATION SCRIPT START -->
+  <script type="text/javascript">
+    // Function Lookup
+    var validationFuncs = {
+      email: validateEmailValidator,
+      pass: validatePassValidator,
+      phone: validatePhoneValidator,
+      zip: validateZipValidator,
+    }
+
+    // Element Shaker
+    function validateShake(selector) {
+      landingElement
+        .querySelectorAll(selector)
+        .forEach((el) => el.classList.add('warning-shake'))
+      setTimeout(() => {
+        landingElement
+          .querySelectorAll(selector)
+          .forEach((el) => el.classList.remove('warning-shake'))
+      }, 500)
+    }
+
+    // Validator Functions
+    function validateEmailValidator(value) {
+      // Email validation regex
+      var emailRegx = new RegExp(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+      // Compare against regex
+      var result = emailRegx.test(value)
+      if (result) {
+        return []
+      }
+      return ['Must be a valid email address']
+    }
+
+    function validatePassValidator(value) {
+      // Inferno password validation regex
+      var passRegx = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/)
+      // Compare against regex
+      var result = passRegx.test(value)
+      if (result) {
+        return []
+      }
+      return [
+        'Must contain at least one uppercase letter, one lowercase letter, one digit and one symbol',
+      ]
+    }
+
+    function validateZipValidator(value) {
+      // 5 and 5-4 digit US Zip Codes
+      var zipRegx = new RegExp(/^\d{5}(-\d{4})?$/)
+      // Compare against regex
+      var result = zipRegx.test(value)
+      if (result) {
+        return []
+      }
+      return ['Must be a valid US Zip Code']
+    }
+
+    function validatePhoneValidator(value) {
+      // International phone regex
+      var phoneRegx = new RegExp(/^[+]?[\s./0-9]*[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/)
+      // Compare against regex
+      var result = phoneRegx.test(value)
+      if (result) {
+        return []
+      } else {
+        return ['Must be a valid phone number']
+      }
+    }
+
+    function debounce(func, wait, immediate) {
+      var timeout
+      return function () {
+        var context = this,
+          args = arguments
+        var later = function () {
+          timeout = null
+          if (!immediate) func.apply(context, args)
+        }
+        var callNow = immediate && !timeout
+        clearTimeout(timeout)
+        timeout = setTimeout(later, wait)
+        if (callNow) func.apply(context, args)
+      }
+    }
+
+    function validatorCheckRequired(value, fieldData) {
+      if (!fieldData.required) return []
+
+      // Check required (or checked if checkbox)
+      if (
+        value === '' ||
+        (validatorGetEl(fieldData.fieldSelector).type === 'checkbox' &&
+          validatorGetEl(fieldData.fieldSelector).checked === false)
+      ) {
+        return ['This field is required']
+      }
+
+      return []
+    }
+
+    function validatorCheckValidateFunc(value, fieldData) {
+      return validationFuncs[fieldData.validation]
+        ? validationFuncs[fieldData.validation](value)
+        : []
+    }
+
+    function validatorCheckMinMax(value, fieldData) {
+      // Check minimum and maximum characters
+      if (
+        (fieldData.minimumCharacters && value.length < fieldData.minimumCharacters) ||
+        (fieldData.maximumCharacters && value.length > fieldData.maximumCharacters)
+      ) {
+        var errorString = ''
+        if (fieldData.minimumCharacters && fieldData.maximumCharacters) {
+          errorString =
+            'Must be between ' +
+            fieldData.minimumCharacters +
+            ' and ' +
+            fieldData.maximumCharacters +
+            ' charactors long'
+        }
+
+        if (fieldData.minimumCharacters && !fieldData.maximumCharacters) {
+          errorString = 'Must be at least ' + fieldData.minimumCharacters + ' characters long'
+        }
+        if (!fieldData.minimumCharacters && fieldData.maximumCharacters) {
+          errorString = 'Must be maximum ' + fieldData.maximumCharacters + ' characters long'
+        }
+        return [errorString]
+      }
+      return []
+    }
+
+    function validatorCheckMatch(value, fieldData) {
+      if (fieldData.mustMatchSelector) {
+        var matchField = validatorGetEl(fieldData.mustMatchSelector)
+        if (matchField.value !== value) {
+          return ['Passwords must match']
+        }
+      }
+      return []
+    }
+
+    function validatorValidate(value, fieldData) {
+      var errors = []
+      errors.push(...validatorCheckRequired(value, fieldData))
+      if (errors.length > 0) return errors
+
+      // If a validator function is specified, run it
+      errors.push(...validatorCheckValidateFunc(value, fieldData))
+
+      // Check min/max
+      errors.push(...validatorCheckMinMax(value, fieldData))
+
+      // Check Fields Match
+      errors.push(...validatorCheckMatch(value, fieldData))
+
+      return errors
+    }
+
+    function validatorToggleClasses(fieldData, validationFields, errors, els) {
+      fieldData._hasErrors = errors.length > 0
+      var op = fieldData._hasErrors ? 'add' : 'remove'
+
+      // Add/remove warning class to elements if they exist
+      els.inputEl && els.inputEl.classList[op](fieldData.warningClass)
+      els.classEl && els.classEl.classList[op](fieldData.warningClass)
+
+      // Add class to parent element, only remove if no errors in group
+      if (
+        fieldData._hasErrors ||
+        (els.groupEl && validationFields.filter((field) => field._hasErrors).length === 0)
+      ) {
+        els.groupEl && els.groupEl.classList[op](fieldData.warningClass)
+      }
+
+      return
+    }
+
+    function validatorDisplayErrors(fieldData, validationFields, errors) {
+      validatorToggleClasses(fieldData, validationFields, errors, {
+        textEl: validatorGetEl(fieldData.warningTextSelector),
+        classEl: validatorGetEl(fieldData.warningElSelector),
+        groupEl: validatorGetEl(fieldData.warningGroupSelector),
+        inputEl: validatorGetEl(fieldData.fieldSelector),
+      })
+
+      // Add text to elements
+      validatorGetEl(fieldData.warningTextSelector).textContent = fieldData._hasErrors
+        ? (fieldData.displayName ? fieldData.displayName + ': ' : '') + errors.join(', ') + '.'
+        : ''
+    }
+
+    function validatorProcess(fieldData, validationFields, skipIfPristine) {
+      var thisValue = validatorGetEl(fieldData.fieldSelector).value
+
+      // Skip validation if field is still pristine, or set dirty
+      if (skipIfPristine && !fieldData._isDirty && thisValue === '') return
+      fieldData._isDirty = true
+
+      var errors = validatorValidate(thisValue, fieldData)
+      validatorDisplayErrors(fieldData, validationFields, errors)
+    }
+
+    function validatorRunAllValidations(validationFields, validationConfig) {
+      var errorCount = 0
+      validationFields.forEach((field) => {
+        var element = validatorGetEl(field.fieldSelector)
+        var errors = validatorValidate(element.value, field).length
+        // If error, retrigger validation to actually display warnings
+        if (errors > 0) {
+          element.dispatchEvent(new Event('blur'))
+        }
+        errorCount += errors
+      })
+
+      validatorDispatchButtonAction(errorCount, validationConfig)
+    }
+
+    // Runs button action based on error count
+    function validatorDispatchButtonAction(errorCount, validationConfig) {
+      if (errorCount === 0) {
+        validationConfig.buttonActionOnValid()
+      } else {
+        validationConfig.buttonActionOnInvalid()
+      }
+    }
+
+    // Return first element found
+    function validatorGetEl(selector) {
+      console.log(selector, landingElement)
+      return landingElement.querySelector(selector)
+    }
+
+    // Return all elements found
+    function validatorGetAllEl(selector) {
+      return landingElement.querySelectorAll(selector)
+    }
+
+    // Default variables
+    function validatorSetCleanField(field) {
+      field._isDirty = false
+      field._hasErrors = false
+    }
+
+    // Add Event Listeners
+    function validatorRegisterEvents(field, validationFields) {
+      var skipIfPristine = true
+      var element = validatorGetEl(field.fieldSelector)
+
+      var validateProcessDebounced = debounce(
+        (e) => validatorProcess(field, validationFields, skipIfPristine),
+        750,
+      )
+
+      console.log(field.fieldSelector, element)
+      element.addEventListener('blur', (e) => {
+        validatorProcess(field, validationFields)
+      })
+
+      element.addEventListener('input', validateProcessDebounced)
+    }
+
+    // Add Event Listeners For Button
+    function validatorRegisterButton(validationFields, validationConfig) {
+      var onClickElement = validatorGetEl(validationConfig.validateButtonSelector)
+      onClickElement.addEventListener('click', (e) => {
+        validatorRunAllValidations(validationFields, validationConfig)
+      })
+    }
+
+    // Initialize Fields and Button
+    function validatorInitialize(validationFields, validationConfig) {
+      validationFields.forEach((field) => {
+        validatorSetCleanField(field)
+        validatorRegisterEvents(field, validationFields)
+      })
+
+      if (validationConfig.validateButtonSelector) {
+        validatorRegisterButton(validationFields, validationConfig)
+      }
+    }
+
+    // ** Call the Register Function once for each form **
+    validatorInitialize(validationFields, validationConfig)
+  </script>
+  <!-- VALIDATION SCRIPT END -->
+
+</inferno-snippet-content>
+<!--  SNIPPET CONTENT END  -->
+<!-- ********************* -->
+<!-- ********************* -->
+<!-- ********************* -->
+
 
 </body>
+
+
 </html>

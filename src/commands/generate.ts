@@ -10,7 +10,10 @@ export default class Generate extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    project: flags.string({char: 'p', description: 'directory for project. Will be created if it does not already exist. The project name needs to exist in inferno.config.js file'}),
+    project: flags.string({
+      char: 'p',
+      description: 'directory for project. Will be created if it does not already exist. The project name needs to exist in inferno.config.js file'
+    }),
     file: flags.string({char: 'f', description: 'file name to create. Will be created under project folder'}),
     test: flags.boolean({char: 't', default: false, description: 'set to test'}),
   }
@@ -43,7 +46,18 @@ export default class Generate extends Command {
       return;
     }
 
-    const templatePath = path.join(__dirname, '../assets/category.html');
+    let templatePath = '';
+    if (templateTargetPath.toLowerCase().includes('categor')) {
+      templatePath = path.join(__dirname, '../assets/category.html');
+    } else if (templateTargetPath.toLowerCase().includes('login')) {
+      templatePath = path.join(__dirname, '../assets/login.html');
+    } else if (templateTargetPath.toLowerCase().includes('regi')) {
+      templatePath = path.join(__dirname, '../assets/registration.html');
+    } else if (templateTargetPath.toLowerCase().includes('player')) {
+      templatePath = path.join(__dirname, '../assets/player.html');
+    }
+
+
     const css = path.join(__dirname, '../assets/inferno-client.css');
     const json = path.join(__dirname, '../assets/liquid.json');
 

@@ -65,7 +65,7 @@ export default class Diff extends Command {
       } else if (localSnippet.id.includes('xxxxxx')) {
         this.log();
         this.log(chalk.bgWhite('NOT CONNECTED') + ' no valid snippet ID exists => ' + chalk.cyan(localSnippet.file ));
-      } else if (serverSnippet.code == localSnippet.code) {
+      } else if (serverSnippet.code.replace(/\s/g, '') == localSnippet.code.replace(/\s/g, '')) {
         this.log();
         this.log(chalk.bgCyan(' IS SAME ') + ' ' + chalk.yellow(serverSnippet.name) + ' === '+ chalk.cyan(localSnippet.file));
       } else {
@@ -118,7 +118,7 @@ export default class Diff extends Command {
 
   private async getServerSnippets(inferno: InfernoAPI) {
     const snippets = await inferno.fetchSnippets();
-    const total = snippets.length
+    const total = snippets.length;
     const progressBar = cli.progress({
       format: 'FETCHING SERVER CODE SNIPPETS | {bar} | {value}/{total} Files',
       barCompleteChar: '\u2588',

@@ -69,13 +69,20 @@
     }
 
     function login() {
-      const currentProject = projects.filter(project => {
-        return project.name === 'halldale'
-      })[0]
-      if (!currentProject) {
-        alert('could not log into Inferno')
-      }
-      authenticate(currentProject)
+      window.addEventListener('load', (event) => {
+        const projectEl = document.querySelector('#novoProject');
+        const projectName = projectEl ? projectEl.getAttribute('name') : null;
+        const currentProject = projects.filter(project => {
+          return project.name === projectName;
+        })[0];
+
+        if (!currentProject) {
+          alert('could not log into Inferno \n\r Check the project name in the login() function');
+          return;
+        }
+
+        authenticate(currentProject);
+      });
     }
 
   </script>
@@ -117,26 +124,26 @@
   </script>
 
   <!-- Build out Local Menu on Left Navigation -->
+
   <style>
     #localTemplateMenu {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: center;
       padding: 1em;
     }
 
     #localTemplateMenu a {
       display: block;
       margin: .25em;
-      background-color: #cccccc;
+      background-color: var(--sidebar-bg-color);
       border: none;
-      border-radius: .3em;
-      color: #000000;
+      border-bottom: solid 1px var(--sidebar-highlight-text-color);
+      color: var(--sidebar-text-color);
       cursor: pointer;
-      text-align: center;
-      min-width: 80%;
-      line-height: 1.5em;
+      width: 80%;
+      padding: .25em 0;
     }
 
     #localTemplateMenu a:hover {
@@ -146,29 +153,45 @@
     }
 
     #localTemplateMenu a.activeMenu {
-      background-color: cornflowerblue;
-      color: white;
+      background-color: var(--sidebar-highlight-bg-color);
+      color: var(--sidebar-text-color);
+    }
+
+    .aside-collapsed * #localTemplateMenu {
+      margin: 0;
+      padding: 1em 0;
+    }
+
+    .aside-collapsed * #localTemplateMenu a {
+      word-wrap: break-word;
+      min-width: 100%;
+      border-radius: 0;
+      border-bottom: 1px solid var(--sidebar-text-color);
+    }
+
+    .aside-collapsed * #localTemplateMenu a:hover {
+      transform: none;
     }
 
   </style>
   <script>
     function buildLocalMenu() {
       window.addEventListener('load', (event) => {
-        const menu = document.getElementById('localTemplateMenu')
+        const menu = document.getElementById('localTemplateMenu');
         window.localTemplateMenuItems.forEach(item => {
-          const menuItem = document.createElement('a')
-          menuItem.href = '../' + item.file
-          menuItem.innerHTML = item.name
-          menuItem.setAttribute('title', item.file + '\n\r' + item.snippetID)
+          const menuItem = document.createElement('a');
+          menuItem.href = "../" + item.file;
+          menuItem.innerHTML = item.name;
+          menuItem.setAttribute('title', item.file + '\n\r' + item.snippetID);
           try {
-            const currentSnippet = landingPageEl.querySelector('#' + item.snippetID.toString())
+            const currentSnippet = landingPageEl.querySelector('#' + item.snippetID.toString());
             if (currentSnippet) {
-              menuItem.classList.toggle('activeMenu')
+              menuItem.classList.toggle('activeMenu');
             }
           } catch (e) {
             // do nothing;
           }
-          menu.appendChild(menuItem)
+          menu.appendChild(menuItem);
         })
       })
     }
@@ -180,7 +203,7 @@
 </head>
 
 <body>
-
+<div style="display:none" id="novoProject" name="" onload="login()"></div>
 <app-root class='layout-fixed has-menu'>
   <videos-layout>
     <div class="wrapper" layout="column">
@@ -206,9 +229,7 @@
       <videos-sidebar class="aside">
         <div class="aside-inner">
           <nav class="sidebar" sidebar-anyclick-close="">
-            <ul class="nav">
-              <li><a href="../">Menu</a></li>
-            </ul>
+            <div class="nav" id="localTemplateMenu"></div>
           </nav>
           </nav>
         </div>
@@ -265,8 +286,11 @@
                   }
 
                   .content {
-                    background-image: url('https://pixabay.com/get/55e0d7424a55ae14f6da8c7dda353678153edce65650774b_1280.jpg');
-                    background-attachment: fixed;
+                    /* standard inferno static assets url = https://studio304nextechar.freetls.fastly.net/infernoAR/{projectname} */
+                    /* s3 bucket assets url = https://inferno-event-assets.s3-us-west-2.amazonaws.com/{projectname} */
+                    position: relative;
+                    background-image: url('https://via.placeholder.com/1200x800/2A59AE/FFFFFF?text=Custom%20Background');
+                    background-attachment: local;
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-position: center;
@@ -279,11 +303,7 @@
                 </style>
 
                 <div class="content">
-
-                  <h2>Liquid Parsing Template</h2>
-                  <p><strong>This is text from the data object:</strong> {{ data.sample }}</p>
-                  <p><strong>This is the data object:</strong> {{ data | json }} </p>
-
+                  <h2 style="color:white">Sample Custom Snippet Page</h2>
                 </div>
 
               </inferno-snippet-content>

@@ -87,8 +87,24 @@ export default class Pull extends Command {
 
   private createLocalFiles(inferno: InfernoAPI, project: any, snippets: any) {
     snippets.forEach((snippet: any) => {
-      const template = path.join(__dirname, '../assets/category.html');
-      const templateTargetPath = path.join(this.util.basePath, project.name, snippet.snippetType + '/' + snippet.name + '.html');
+      let template = '';
+      if (snippet.snippetType.toLowerCase().includes('categor')) {
+        template = path.join(__dirname, '../assets/category.html');
+      } else if (snippet.snippetType.toLowerCase().includes('login')) {
+        template = path.join(__dirname, '../assets/login.html');
+      } else if (snippet.snippetType.toLowerCase().includes('regi')) {
+        template = path.join(__dirname, '../assets/registration.html');
+      } else if (snippet.snippetType.toLowerCase().includes('player')) {
+        template = path.join(__dirname, '../assets/player.html');
+      }
+
+      const fileName = snippet.name
+        .replace(/[^\w]/g, '-')
+        .replace(/---/g, "-")
+        .replace(/--/g, "-")
+        .toLowerCase()
+
+      const templateTargetPath = path.join(this.util.basePath, project.name, snippet.snippetType.toLowerCase() + '/' + fileName + '.html');
 
       inferno.fetchLatestSnippetCode(snippet.id, snippet.name).then(item => {
         if (!item || !item.snippet) return;
@@ -96,6 +112,10 @@ export default class Pull extends Command {
         const contents = fs.readFileSync(template).toString();
         const $ = cheerio.load(contents, {decodeEntities: false});
         const wrapper = $(this.util.wrapperElement);
+
+        // set attribute on this element to setup auto login for API use in the template
+        $('#novoProject').attr('name', project.name);
+
         const newLine = '\n\r';
         wrapper.attr('id', snippet.id);
         wrapper.html(newLine + item.snippet + newLine);
@@ -105,10 +125,9 @@ export default class Pull extends Command {
       }).catch((err: any) => {
         this.log(chalk.redBright('ERROR - unable to create file for '), templateTargetPath);
         this.log(err);
-
       });
 
-    })
+    });
   }
 
 
