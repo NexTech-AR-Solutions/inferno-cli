@@ -87,7 +87,7 @@ export default class Pull extends Command {
 
   private createLocalFiles(inferno: InfernoAPI, project: any, snippets: any) {
     snippets.forEach((snippet: any) => {
-      const template = path.join(__dirname, '../assets/template.html');
+      const template = path.join(__dirname, '../assets/category.html');
       const templateTargetPath = path.join(this.util.basePath, project.name, snippet.snippetType + '/' + snippet.name + '.html');
 
       inferno.fetchLatestSnippetCode(snippet.id, snippet.name).then(item => {

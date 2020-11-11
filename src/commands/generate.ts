@@ -43,7 +43,7 @@ export default class Generate extends Command {
       return;
     }
 
-    const templatePath = path.join(__dirname, '../assets/template.html');
+    const templatePath = path.join(__dirname, '../assets/category.html');
     const css = path.join(__dirname, '../assets/inferno-client.css');
     const json = path.join(__dirname, '../assets/liquid.json');
 

@@ -19,24 +19,24 @@
   <!--  Local/Client Color Overrides if they file exists -->
   <link rel="stylesheet" href="../inferno-client.css">
   <script>
-    let landingPageEl = null;
-    window.isLocalTemplate = true;
+    let landingPageEl = null
+    window.isLocalTemplate = true
   </script>
   <!-- Import JQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
   <!--  Authenticate into the platform and set session values so you can leverage API calls in your snippets -->
   <script>
     function authenticate(project) {
-      const _baseUrl = 'https://ingress.infernocore.jolokia.com/api/';
+      const _baseUrl = 'https://ingress.infernocore.jolokia.com/api/'
       // Auth w/ Inferno API
       const params = {
         email: project.username,
         password: project.password,
-        grantType: 'password'
-      };
+        grantType: 'password',
+      }
 
       // Set header
-      const headers = {'X-InfernoCore-Domain': project.domain};
+      const headers = {'X-InfernoCore-Domain': project.domain}
 
       // perform synchronous ajax call so rest of code waits until you are authenticated
       $.ajax({
@@ -48,41 +48,43 @@
         headers: headers,
         data: JSON.stringify(params),
         success: function (res) {
-          sessionStorage.setItem("domain", project.domain);
-          storeUser(JSON.parse(res));
+          sessionStorage.setItem('domain', project.domain)
+          storeUser(JSON.parse(res))
         },
         error: function (err) {
-          alert(JSON.stringify(err));
+          alert(JSON.stringify(err))
         },
         complete: function () {
-          console.log('user was authenticated into ', project.domain);
-        }
-      });
+          console.log('user was authenticated into ', project.domain)
+        },
+      })
 
     }
 
     function storeUser(data) {
       // console.log(data);
-      sessionStorage.setItem("clientId", data.ClientId);
-      sessionStorage.setItem("token", data.AccessToken);
-      sessionStorage.setItem("refreshToken", data.RefreshToken);
+      sessionStorage.setItem('clientId', data.ClientId)
+      sessionStorage.setItem('token', data.AccessToken)
+      sessionStorage.setItem('refreshToken', data.RefreshToken)
     }
 
     function login() {
       const currentProject = projects.filter(project => {
-        return project.name === 'halldale';
-      })[0];
+        return project.name === 'halldale'
+      })[0]
       if (!currentProject) {
-        alert('could not log into Inferno');
+        alert('could not log into Inferno')
       }
-      authenticate(currentProject);
+      authenticate(currentProject)
     }
 
   </script>
   <!-- store your credentials in a local file -->
   <!-- use to keep credentials out of files in case of committing to REPO or sharing template with someone else.-->
   <!-- projects = [{name: 'anything', username: 'email@address.com', password: '**********', domain: 'novologic.infernoar.com'}]-->
-  <script onload="login()" onerror="console.error('/inferno.web.config.js', 'does not exist, can not log into inferno as test user')" src="/inferno.web.config.js"></script>
+  <script onload="login()"
+          onerror="console.error('/inferno.web.config.js', 'does not exist, can not log into inferno as test user')"
+          src="/inferno.web.config.js"></script>
 
   <!-- Liquid Templating -->
   <script src="https://cdn.jsdelivr.net/npm/liquidjs/dist/liquid.min.js"></script>
@@ -113,6 +115,68 @@
     })
 
   </script>
+
+  <!-- Build out Local Menu on Left Navigation -->
+  <style>
+    #localTemplateMenu {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 1em;
+    }
+
+    #localTemplateMenu a {
+      display: block;
+      margin: .25em;
+      background-color: #cccccc;
+      border: none;
+      border-radius: .3em;
+      color: #000000;
+      cursor: pointer;
+      text-align: center;
+      min-width: 80%;
+      line-height: 1.5em;
+    }
+
+    #localTemplateMenu a:hover {
+      filter: brightness(80%);
+      text-decoration: none;
+      transform: translateX(-.3em);
+    }
+
+    #localTemplateMenu a.activeMenu {
+      background-color: cornflowerblue;
+      color: white;
+    }
+
+  </style>
+  <script>
+    function buildLocalMenu() {
+      window.addEventListener('load', (event) => {
+        const menu = document.getElementById('localTemplateMenu')
+        window.localTemplateMenuItems.forEach(item => {
+          const menuItem = document.createElement('a')
+          menuItem.href = '../' + item.file
+          menuItem.innerHTML = item.name
+          menuItem.setAttribute('title', item.file + '\n\r' + item.snippetID)
+          try {
+            const currentSnippet = landingPageEl.querySelector('#' + item.snippetID.toString())
+            if (currentSnippet) {
+              menuItem.classList.toggle('activeMenu')
+            }
+          } catch (e) {
+            // do nothing;
+          }
+          menu.appendChild(menuItem)
+        })
+      })
+    }
+  </script>
+  <script onload="buildLocalMenu()"
+          onerror="console.error('../menu.js', 'does not exist, run inferno build {project-name} to generate menu.js file')"
+          src="../menu.js"></script>
+
 </head>
 
 <body>
@@ -157,10 +221,10 @@
             <div id="landing">
               <!-- CREATE SHADOW DOM AND ATTACH STYLES -->
               <script>
-                landingPageEl = document.querySelector('landing-page').attachShadow({mode: 'open'});
-                const landing = landingPageEl.appendChild(document.getElementById('landing'));
-                landingPageEl.appendChild(landing);
-                const loginPageEl = landingPageEl;
+                landingPageEl = document.querySelector('landing-page').attachShadow({mode: 'open'})
+                const landing = landingPageEl.appendChild(document.getElementById('landing'))
+                landingPageEl.appendChild(landing)
+                const loginPageEl = landingPageEl
               </script>
               <style type="text/css">
                 @import url("https://studio304nextechar.freetls.fastly.net/infernoAR/_templates/css/inferno-shadow-styles.css");
@@ -175,21 +239,21 @@
                 <script type="text/javascript">
                   function loadFont(name, url) {
                     if (document.fonts.check('1em ' + name)) {
-                      return;
+                      return
                     }
-                    const fontFace = new FontFace(name, 'url(' + url + ')');
+                    const fontFace = new FontFace(name, 'url(' + url + ')')
 
                     fontFace.load().then(function (loadedFont) {
-                      document.fonts.add(loadedFont);
-                      console.log('Loaded custom font ', name);
+                      document.fonts.add(loadedFont)
+                      console.log('Loaded custom font ', name)
                     }).catch(function (error) {
                       // error occurred
-                      console.log('Error loading ', name);
-                    });
+                      console.log('Error loading ', name)
+                    })
 
                   }
 
-                  loadFont('CustomFont1', 'https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2');
+                  loadFont('CustomFont1', 'https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2')
 
                 </script>
 
