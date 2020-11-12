@@ -18,7 +18,14 @@ export default class Pull extends Command {
     '$ inferno pull projectname',
   ]
 
-  static args = [{name: 'project', required: true, description: 'project name to pull from'}];
+  static args = [
+    {name: 'project', required: true, description: 'project name to pull from'},
+    {
+      name: 'filter',
+      required: true,
+      description: 'case insensitive search filter for pulling snippets, use "*" to pull all, use "abcd*" to starts with, "abcd" for exact match'
+    }
+  ];
   static flags = {
     // can pass either --create or -c
     create: flags.boolean({
@@ -41,7 +48,26 @@ export default class Pull extends Command {
     const inferno = new InfernoAPI();
     await inferno.init(project.username, project.password, project.domain);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
-    const snippets = await inferno.fetchSnippets();
+    let snippets = await inferno.fetchSnippets();
+
+    snippets = snippets.filter((item: any) => {
+      let filter = args.filter.trim().toLowerCase();
+
+      if (filter === '*') {
+        // return all
+        return true;
+      }
+
+      if (filter.endsWith('*')) {
+        // return items who start with the filter value
+        filter = filter.replace('*', '');
+        return item.name.toLowerCase().startsWith(filter);
+      }
+
+      // return items that match exactly with the filter value
+      return item.name.toLowerCase() === filter;
+
+    });
 
     cli.action.stop();
 

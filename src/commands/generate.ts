@@ -17,7 +17,7 @@ export default class Generate extends Command {
     file: flags.string({char: 'f', description: 'file name to create. Will be created under project folder'}),
     test: flags.boolean({char: 't', default: false, description: 'set to test'}),
   }
-  static args = [{name: 'project'}, {name: 'file'}];
+  static args = [{name: 'project', required: true}, {name: 'file', required: true}];
   util: NovoUtils = new NovoUtils();
   name: string;
   file: string;
@@ -28,11 +28,12 @@ export default class Generate extends Command {
     this.name = flags.project ?? args.project;
     this.file = flags.file ?? args.file;
 
+    const project = await this.util.getConfig(this.name);
+
     if (!this.file.includes('.html')) {
       this.file += '.html';
     }
 
-    const project = await this.util.getConfig(this.name);
     const templateTargetPath = path.join(this.util.basePath, project.name, this.file);
     const cssTargetPath = path.join(this.util.basePath, project.name, 'inferno-client.css');
     const jsonTargetPath = path.join(this.util.basePath, project.name, 'liquid.json');
