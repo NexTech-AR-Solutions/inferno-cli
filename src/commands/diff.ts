@@ -2,31 +2,14 @@ import {Command} from '@oclif/command'
 import {InfernoAPI} from '../utilities/infernoAPI'
 import Messages from '../utilities/messages'
 import NovoUtils, {Project} from '../utilities/novo-utils';
+import {LocalSnippet, InfernoSnippet, asyncForEach} from '../utilities/common';
 
 const {cli} = require('cli-ux')
 const fs = require('fs-extra');
 const path = require('path');
 const FileSet = require('file-set');
-const notifier = require('node-notifier');
-const {cosmiconfig} = require('cosmiconfig');
 const chalk = require('chalk');
-const moment = require('moment');
 const cheerio = require('cheerio');
-
-
-export type LocalSnippet = {
-  file: string,
-  id: string,
-  code: string,
-}
-
-export type ServerSnippet = {
-  id: string,
-  name: string,
-  type: string,
-  code: string,
-}
-
 
 export default class Diff extends Command {
   static description = 'Compare local code snippets with snippets on the server'
@@ -34,7 +17,9 @@ export default class Diff extends Command {
     '$ inferno dif projectname',
   ]
 
-  static args = [{name: 'project', required: true, description: 'project name to compare snippets from'}];
+  static args = [
+    {name: 'project', required: true, description: 'project name to compare snippets from'}
+    ];
   util: NovoUtils = new NovoUtils();
   project: Project;
 
@@ -51,7 +36,7 @@ export default class Diff extends Command {
     await inferno.init(this.project.username, this.project.password, this.project.domain);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
 
-    const serverSnippets: Array<ServerSnippet> = await this.getServerSnippets(inferno);
+    const serverSnippets: Array<InfernoSnippet> = await this.getServerSnippets(inferno);
     const localSnippets: Array<LocalSnippet> = this.getLocalSnippets('*.*');
 
     localSnippets.forEach(localSnippet => {
@@ -67,10 +52,10 @@ export default class Diff extends Command {
         this.log(chalk.bgWhite('NOT CONNECTED') + ' no valid snippet ID exists => ' + chalk.cyan(localSnippet.file ));
       } else if (serverSnippet.code.replace(/\s/g, '') == localSnippet.code.replace(/\s/g, '')) {
         this.log();
-        this.log(chalk.bgCyan(' IS SAME ') + ' ' + chalk.yellow(serverSnippet.name) + ' === '+ chalk.cyan(localSnippet.file));
+        this.log(chalk.bgCyan(' IS SAME ') + ' ' + chalk.yellow(serverSnippet.file) + ' === '+ chalk.cyan(localSnippet.file));
       } else {
         this.log();
-        this.log(chalk.bold(chalk.bgRed(' IS DIFF ')) + ' ' +  chalk.yellow(serverSnippet.name) + ' !== '+  chalk.cyan(localSnippet.file));
+        this.log(chalk.bold(chalk.bgRed(' IS DIFF ')) + ' ' +  chalk.yellow(serverSnippet.file) + ' !== '+  chalk.cyan(localSnippet.file));
       }
 
     });
@@ -126,17 +111,17 @@ export default class Diff extends Command {
     })
     progressBar.start(total, 0)
 
-    const serverSnippets: Array<ServerSnippet> = [];
+    const infernoSnippets: Array<InfernoSnippet> = [];
 
     let count = 0;
     // this is  a hack to get synchronous calling of data for each code snippet.
-    await this.asyncForEach(snippets, async (item: any) => {
+    await asyncForEach(snippets, async (item: any) => {
       progressBar.update(count++);
-      const code: any = await inferno.fetchLatestSnippetCode(item.id);
+      const code: any = await inferno.fetchLatestSnippetCode(item);
       if (code) {
-        serverSnippets.push({
+        infernoSnippets.push({
           id: item.id,
-          name: item.name,
+          file: item.name,
           type: item.snippetType,
           code: code.snippet
         });
@@ -146,14 +131,9 @@ export default class Diff extends Command {
     // stop the progress bar
     progressBar.update(count++);
     progressBar.stop();
-    return serverSnippets;
+    return infernoSnippets;
   }
 
-  // this is  a hack to get synchronous calling of data for each code snippet.
-  private async asyncForEach(array: any, callback: any) {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
-    }
-  }
+
 
 }

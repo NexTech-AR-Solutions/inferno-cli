@@ -69,23 +69,30 @@ export class InfernoAPI {
 
   }
 
-  public async fetchLatestSnippetCode(id: string, name: string = '') {
+  public async fetchLatestSnippetCode(snippet: any) {
     const endPoint = 'Snippets/LatestRevision/';
-    const url = InfernoAPI.baseUrl + endPoint + id;
+    const url = InfernoAPI.baseUrl + endPoint + snippet.id;
     return await axios.get(url, {
       headers: {
         Authorization: this.accessToken,
         'X-InfernoCore-Domain': this.domain
       }
     })
-      .then(res => res.data)
+      .then(res => {
+        return res.data;
+      })
       .catch((error) => {
-        console.error(chalk.red(`fetchLatestSnippetCode : ${name} => ${url}`));
-        let reason = '';
-        if (error.toString().includes('404')) {
-          reason = '.... likely reason. No code revision exists in the snippet ' + name;
+       if (error.toString().includes('404')) {
+          return {
+            id: '00000000-0000-0000-0000-000000000000',
+            comments: 'does not exist',
+            snippet: `<h1>${snippet.name}</h1>`,
+            codeSnippetId: snippet.id
+          };
+        } else {
+         console.error(chalk.red(`fetchLatestSnippetCode : ${snippet.name} => ${url}`));
+         console.error(chalk.yellow(error.toString()));
         }
-        console.error(chalk.yellow(error) + reason);
       });
   }
 

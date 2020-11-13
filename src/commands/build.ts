@@ -1,13 +1,11 @@
 import {Command} from '@oclif/command'
 import Messages from '../utilities/messages'
 import NovoUtils, {Project} from '../utilities/novo-utils';
-import {LocalSnippet} from './diff';
 import cli from 'cli-ux'
+import {LocalSnippet} from '../utilities/common';
 const FileSet = require('file-set');
 const fs = require('fs-extra');
 const path = require('path');
-const {cosmiconfig} = require('cosmiconfig');
-const chalk = require('chalk');
 const cheerio = require('cheerio');
 
 export default class Build extends Command {

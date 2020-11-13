@@ -2,12 +2,12 @@ import {Command, flags} from '@oclif/command'
 import cli from 'cli-ux'
 import {InfernoAPI} from '../utilities/infernoAPI'
 import Messages from '../utilities/messages'
-import NovoUtils from '../utilities/novo-utils';
+import NovoUtils, {Project} from '../utilities/novo-utils';
+import {asyncForEach, LocalSnippet} from '../utilities/common';
 
 const fs = require('fs-extra');
+const FileSet = require('file-set');
 const path = require('path');
-const notifier = require('node-notifier');
-const {cosmiconfig} = require('cosmiconfig');
 const chalk = require('chalk');
 const moment = require('moment');
 const cheerio = require('cheerio');
@@ -34,6 +34,7 @@ export default class Pull extends Command {
     }),
   }
   util: NovoUtils = new NovoUtils();
+  project: Project;
 
   async run() {
 
@@ -41,12 +42,12 @@ export default class Pull extends Command {
     const message = new Messages('PULL');
     this.log(message.starting);
 
-    const project = await this.util.getConfig(args.project);
+    this.project = await this.util.getConfig(args.project);
 
     // log into inferno and fetch the snippets
-    this.log(chalk.blue('Starting to Pull Snippets for ') + chalk.yellowBright(project.domain));
+    this.log(chalk.blue('Starting to Pull Snippets for ') + chalk.yellowBright(this.project.domain));
     const inferno = new InfernoAPI();
-    await inferno.init(project.username, project.password, project.domain);
+    await inferno.init(this.project.username, this.project.password, this.project.domain);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
     let snippets = await inferno.fetchSnippets();
 
@@ -72,13 +73,76 @@ export default class Pull extends Command {
     cli.action.stop();
 
     if (flags.create) {
-      this.createLocalFiles(inferno, project, snippets);
+      await this.createLocalFiles(inferno, snippets);
+      this.log('');
+      this.createMenuJs();
     } else {
       // output the results to the console
       this.displaySnippets(snippets);
     }
 
     this.log(message.finished);
+  }
+
+  getLocalSnippets(filePath: string): Array<LocalSnippet> {
+    const snippets: Array<LocalSnippet> = [];
+    const files = this.getFiles(filePath);
+    const total = files.length;
+    const progressBar = cli.progress({
+      format: 'BUILDING menus.js from local files | {bar} | {value}/{total} Files',
+      barCompleteChar: '\u2588',
+      barIncompleteChar: '\u2591',
+    })
+    progressBar.start(total, 0)
+
+    let count = 0;
+    files.forEach((file: string) => {
+      progressBar.update(count++);
+      const snippet = this.getLocalSnippet(file);
+      if (snippet.snippetID) {
+        snippets.push(snippet);
+      }
+    });
+
+    progressBar.update(count++);
+    progressBar.stop();
+    return snippets;
+  }
+
+  getLocalSnippet(file: string): any {
+    const contents = fs.readFileSync(file).toString();
+    const $ = cheerio.load(contents, {decodeEntities: false});
+    const wrapper = $(this.util.wrapperElement);
+    let projectPath = path.join(this.util.basePath, this.project.name) + '/';
+    projectPath = projectPath.replace(/\\/g, '/');
+    return {
+      file: file.replace(projectPath, ""),
+      snippetID: (wrapper && wrapper.attr('id')) ? wrapper.attr('id') : null,
+      name: this.getFileName(file)
+    }
+  }
+
+  getFileName(filePath: string) {
+    return filePath
+      .replace(/^.*[\\\/]/, '')
+      .replace('.html', '')
+      .replace(/_/g, ' ')
+      .replace(/-/g, ' ')
+      .replace(/(?: |\b)(\w)/g, function (key) {
+        return key.toUpperCase()
+      });
+  }
+
+  getFiles(filepath: string): any {
+    const searchpath = this.getGlobPath(filepath);
+    const fileSet = new FileSet(searchpath);
+    return fileSet.files.filter((file: string) => file.includes('.htm'));
+  }
+
+  getGlobPath(fileName: string): string {
+    const fullPath = path.join(this.util.basePath, this.project.name) + '/**/' + fileName;
+    // convert windows path delimiter to unix/windows compatible
+    return fullPath.replace(/\\/g, "/");
   }
 
   private displaySnippets(snippets: any) {
@@ -111,17 +175,18 @@ export default class Pull extends Command {
     cli.table(snippets, columns, options)
   }
 
-  private createLocalFiles(inferno: InfernoAPI, project: any, snippets: any) {
-    snippets.forEach((snippet: any) => {
+  private async createLocalFiles(inferno: InfernoAPI, snippets: any) {
+    await asyncForEach(snippets, async (snippet: any) => {
       let template = '';
-      if (snippet.snippetType.toLowerCase().includes('categor')) {
-        template = path.join(__dirname, '../assets/category.html');
-      } else if (snippet.snippetType.toLowerCase().includes('login')) {
+      const type = snippet.snippetType.toLowerCase()
+      if (type.includes('login')) {
         template = path.join(__dirname, '../assets/login.html');
-      } else if (snippet.snippetType.toLowerCase().includes('regi')) {
+      } else if (type.includes('regi')) {
         template = path.join(__dirname, '../assets/registration.html');
-      } else if (snippet.snippetType.toLowerCase().includes('player')) {
+      } else if (type.includes('player')) {
         template = path.join(__dirname, '../assets/player.html');
+      } else {
+        template = path.join(__dirname, '../assets/category.html');
       }
 
       const fileName = snippet.name
@@ -130,9 +195,9 @@ export default class Pull extends Command {
         .replace(/--/g, "-")
         .toLowerCase()
 
-      const templateTargetPath = path.join(this.util.basePath, project.name, snippet.snippetType.toLowerCase() + '/' + fileName + '.html');
+      const templateTargetPath = path.join(this.util.basePath, this.project.name, snippet.snippetType.toLowerCase() + '/' + fileName + '.html');
 
-      inferno.fetchLatestSnippetCode(snippet.id, snippet.name).then(item => {
+      await inferno.fetchLatestSnippetCode(snippet).then(item => {
         if (!item || !item.snippet) return;
 
         const contents = fs.readFileSync(template).toString();
@@ -140,13 +205,12 @@ export default class Pull extends Command {
         const wrapper = $(this.util.wrapperElement);
 
         // set attribute on this element to setup auto login for API use in the template
-        $('#novoProject').attr('name', project.name);
+        $('#novoProject').attr('name', this.project.name);
 
-        const newLine = '\n\r';
         wrapper.attr('id', snippet.id);
-        wrapper.html(newLine + item.snippet + newLine);
-        const newContents = $('html').html();
-        fs.outputFile(templateTargetPath, newContents);
+        wrapper.html(item.snippet);
+        const newFile = $('html').html();
+        fs.outputFile(templateTargetPath, newFile);
         this.log(chalk.green('Created '), chalk.blue(templateTargetPath));
       }).catch((err: any) => {
         this.log(chalk.redBright('ERROR - unable to create file for '), templateTargetPath);
@@ -154,6 +218,12 @@ export default class Pull extends Command {
       });
 
     });
+  }
+
+  private createMenuJs() {
+    const snippets = this.getLocalSnippets('*.*');
+    const target = path.join(this.util.basePath, this.project.name, '/menu.js');
+    fs.outputFile(target, 'window.localTemplateMenuItems = ' + JSON.stringify(snippets));
   }
 
 

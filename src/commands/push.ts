@@ -3,6 +3,7 @@ import {InfernoAPI} from '../utilities/infernoAPI'
 import NovoUtils, {Project} from '../utilities/novo-utils';
 import Messages from '../utilities/messages'
 import cli from 'cli-ux';
+import {InfernoSnippet} from '../utilities/common';
 
 const cheerio = require('cheerio');
 const chalk = require('chalk');
@@ -14,12 +15,7 @@ const moment = require('moment');
 // beautify currently breaks files with liquid in them we will skipp doing this for now
 // const beautify = require('js-beautify').html;
 
-export type Snippet = {
-  file: string,
-  id: string,
-  comment: string,
-  code: string,
-}
+
 
 export default class Push extends Command {
   static description = 'Push code snippets to Inferno AR Instance associated with your login'
@@ -51,7 +47,7 @@ export default class Push extends Command {
   message: Messages = new Messages('PUSH');
   util: NovoUtils = new NovoUtils();
   inferno: InfernoAPI = new InfernoAPI();
-  snippets: Array<Snippet>;
+  snippets: Array<InfernoSnippet>;
   project: Project;
   comment: string;
 
@@ -77,8 +73,8 @@ export default class Push extends Command {
 
   }
 
-  private getSnippets(filePath: string): Array<Snippet> {
-    const snippets: Array<Snippet> = [];
+  private getSnippets(filePath: string): Array<InfernoSnippet> {
+    const snippets: Array<InfernoSnippet> = [];
     const files = this.getFiles(filePath);
 
     files.forEach((file: string) => {
@@ -182,7 +178,7 @@ export default class Push extends Command {
 
   }
 
-  private getSnippet(file: string): Snippet {
+  private getSnippet(file: string): InfernoSnippet {
     const contents = fs.readFileSync(file).toString();
     const $ = cheerio.load(contents,  {decodeEntities: false});
     const wrapper = $(this.util.wrapperElement);
