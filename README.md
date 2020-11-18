@@ -16,7 +16,6 @@ $ sudo npm link
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g inferno-cli
 $ inferno COMMAND
 running command...
 $ inferno (-v|--version|version)
