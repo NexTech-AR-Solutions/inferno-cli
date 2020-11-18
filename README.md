@@ -120,8 +120,7 @@ USAGE
 
 ARGUMENTS
   PROJECT  project/directory to push from
-  FILE     file name to push (relative to project dir) or *all to push all files in project sub dir
-
+  FILE     file name to push (relative to project dir) you can use wild cards "main*.*" "Lobby*.*"
 OPTIONS
   -c, --comment=comment  [default: Updated via inferno-cli] comment to add to snippet revision when pushed
   -h, --help             show CLI help
@@ -178,15 +177,23 @@ $ my-project
 
 **example contents of inferno.config.js**
 ```
-module.exports = {
-  projects: [
+const projects: [
     {
       name: 'my-project',
       username: 'xxxxxxxxxx',
-      password: 'xxxxxxxxxx'
+      password: 'xxxxxxxxxx',
+      dueDate: '2021-01-19T08:00'
     },
-  ],
+  ];
+
+try {
+  module.exports = {
+    projects
+  }
+} catch {
+  // do nothing
 }
+
 ``` 
 
 
