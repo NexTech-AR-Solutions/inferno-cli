@@ -46,7 +46,7 @@ ARGUMENTS
   PROJECT  project name to compare snippets from
 
 EXAMPLE
-  $ inferno dif projectname
+  $ inferno diff projectname
 ```
 
 _See code: [src\commands\diff.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\diff.ts)_
