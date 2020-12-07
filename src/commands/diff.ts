@@ -14,7 +14,7 @@ const cheerio = require('cheerio');
 export default class Diff extends Command {
   static description = 'Compare local code snippets with snippets on the server'
   static examples = [
-    '$ inferno dif projectname',
+    '$ inferno diff projectname',
   ]
 
   static args = [
