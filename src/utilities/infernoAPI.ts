@@ -96,4 +96,20 @@ export class InfernoAPI {
       });
   }
 
+  public async fetchVideos() {
+    const endPoint = 'Events';
+    const url = InfernoAPI.baseUrl + endPoint;
+    return await axios.get(url, {
+      headers: {
+        Authorization: this.accessToken,
+        'X-InfernoCore-Domain': this.domain
+      }
+    })
+      .then(res => res.data)
+      .catch((error) => {
+        console.error(chalk.red(`fetchVideos : ${url}`));
+        console.error(chalk.yellow(error));
+      });
+  }
+
 }
