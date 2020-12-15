@@ -65,6 +65,7 @@ export default class Diff extends Command {
     this.log();
     this.log('Checked (' + localSnippets.length + ') local snippets and (' + serverSnippets.length + ') Server Snippets');
     this.log();
+    this.log('\n\r This command is experimental and not meant for real use at this time \n\r');
     this.log(message.finished);
   }
 
