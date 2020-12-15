@@ -30,6 +30,8 @@ export default class Diff extends Command {
     this.log(message.starting);
     this.project = await this.util.getConfig(args.project);
 
+    this.log('\n\r This command is experimental and not meant for real use at this time \n\r');
+
     // log into inferno and fetch the snippets
     this.log(chalk.blue('Comparing code snippet differences ') + chalk.yellowBright(this.project.domain));
     const inferno = new InfernoAPI();
