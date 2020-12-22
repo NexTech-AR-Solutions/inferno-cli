@@ -221,6 +221,7 @@ export default class Pull extends Command {
   }
 
   private createMenuJs() {
+    this.log('****** updating local menu.js file');
     const snippets = this.getLocalSnippets('*.*');
     const target = path.join(this.util.basePath, this.project.name, '/menu.js');
     fs.outputFile(target, 'window.localTemplateMenuItems = ' + JSON.stringify(snippets));
