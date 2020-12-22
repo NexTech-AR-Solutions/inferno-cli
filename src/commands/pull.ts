@@ -75,13 +75,13 @@ export default class Pull extends Command {
     if (flags.create) {
       await this.createLocalFiles(inferno, snippets);
       this.log('');
-      this.createMenuJs();
+      await this.createMenuJs(message.finished);
     } else {
       // output the results to the console
       this.displaySnippets(snippets);
+      this.log(message.finished);
     }
 
-    this.log(message.finished);
   }
 
   getLocalSnippets(filePath: string): Array<LocalSnippet> {
@@ -220,12 +220,14 @@ export default class Pull extends Command {
     });
   }
 
-  private createMenuJs() {
+  private createMenuJs(message: string) {
     this.log('****** updating local menu.js file');
-    const snippets = this.getLocalSnippets('*.*');
-    const target = path.join(this.util.basePath, this.project.name, '/menu.js');
-    fs.outputFile(target, 'window.localTemplateMenuItems = ' + JSON.stringify(snippets));
+    setTimeout(() => {
+      const snippets = this.getLocalSnippets('*.*');
+      const target = path.join(this.util.basePath, this.project.name, '/menu.js');
+      fs.outputFile(target, 'window.localTemplateMenuItems = ' + JSON.stringify(snippets));
+      this.log(message);
+    }, 1000);
   }
-
 
 }

@@ -124,7 +124,6 @@
   </script>
 
   <!-- Build out Local Menu on Left Navigation -->
-
   <style>
     #localTemplateMenu {
       display: flex;
@@ -134,7 +133,7 @@
       padding: 1em;
     }
 
-    #localTemplateMenu a {
+    #localTemplateMenu a, #localTemplateMenu details{
       display: block;
       margin: .25em;
       background-color: var(--sidebar-bg-color);
@@ -144,6 +143,10 @@
       cursor: pointer;
       width: 80%;
       padding: .25em 0;
+    }
+
+    #localTemplateMenu details a {
+      margin-left: 1em;
     }
 
     #localTemplateMenu a:hover {
@@ -178,11 +181,14 @@
     function buildLocalMenu() {
       window.addEventListener('load', (event) => {
         const menu = document.getElementById('localTemplateMenu');
-        const menuItems = window.localTemplateMenuItems.sort((a, b) =>  {
+        const menuItems = window.localTemplateMenuItems.sort((a, b) => {
           return a.name > b.name ? 1 : -1;
         });
 
-        menuItems.forEach(item => {
+        const pages = menuItems.filter(item => !item.name.toLowerCase().includes('booth'));
+        const booths = menuItems.filter(item => item.name.toLowerCase().includes('booth'));
+
+        pages.forEach(item => {
           const menuItem = document.createElement('a');
           menuItem.href = "../" + item.file;
           menuItem.innerHTML = item.name;
@@ -196,7 +202,34 @@
             // do nothing;
           }
           menu.appendChild(menuItem);
-        })
+        });
+
+        const boothMenu = document.createElement("details");
+        const summary = document.createElement("summary");
+        summary.innerHTML = "BOOTHS";
+        boothMenu.appendChild(summary);
+
+        booths.forEach(item => {
+          const menuItem = document.createElement('a');
+          menuItem.href = "../" + item.file;
+          menuItem.innerHTML = item.name;
+          menuItem.setAttribute('title', item.file + '\n\r' + item.snippetID);
+          try {
+            const currentSnippet = landingPageEl.querySelector('#' + item.snippetID.toString());
+            if (currentSnippet) {
+              menuItem.classList.toggle('activeMenu');
+            }
+          } catch (e) {
+            // do nothing;
+          }
+          boothMenu.appendChild(menuItem);
+        });
+
+        if (booths.length) {
+          menu.appendChild(boothMenu);
+        }
+
+
       })
     }
   </script>
