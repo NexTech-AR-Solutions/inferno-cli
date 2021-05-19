@@ -338,6 +338,7 @@ const projects: [
       name: 'my-project',
       username: 'xxxxxxxxxx',
       password: 'xxxxxxxxxx',
+      platform: 'azure', // Omit if you're still on the Amazon cluster.
       dueDate: '2021-01-19T08:00'
     },
   ];
