@@ -66,7 +66,7 @@ export default class Push extends Command {
     }
 
     this.log(chalk.blue('Starting to Push Snippets for ') + chalk.yellowBright(this.project.domain));
-    await this.inferno.init(this.project.username, this.project.password, this.project.domain);
+    await this.inferno.init(this.project.username, this.project.password, this.project.domain, this.project.platform);
     this.snippets.forEach((snippet: any) => {
       this.putSnippets(snippet);
     })

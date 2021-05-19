@@ -33,7 +33,13 @@
   <!--  Authenticate into the platform and set session values so you can leverage API calls in your snippets -->
   <script>
     function authenticate(project) {
-      const _baseUrl = 'https://ingress.infernocore.jolokia.com/api/'
+      let _baseUrl = 'https://ingress.infernocore.jolokia.com/api/'
+      if(project.platform) {
+        switch(project.platform) {
+          case "azure": _baseUrl = "https://prod-eastus-ingress.inferno.jolokia.com/api/"; break;
+          default: console.log(project.platform+" isn't a supported platform, yet."); _baseUrl = 'https://ingress.infernocore.jolokia.com/api/'; break;
+        }
+      }
       // Auth w/ Inferno API
       const params = {
         email: project.username,

@@ -35,7 +35,7 @@ export default class Diff extends Command {
     // log into inferno and fetch the snippets
     this.log(chalk.blue('Comparing code snippet differences ') + chalk.yellowBright(this.project.domain));
     const inferno = new InfernoAPI();
-    await inferno.init(this.project.username, this.project.password, this.project.domain);
+    await inferno.init(this.project.username, this.project.password, this.project.domain, this.project.platform);
     this.log(chalk.cyan('Authenticated to Inferno: clientId = ' + inferno.clientId));
 
     const serverSnippets: Array<InfernoSnippet> = await this.getServerSnippets(inferno);

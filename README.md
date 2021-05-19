@@ -16,6 +16,18 @@ $ sudo npm link
 # Usage
 <!-- usage -->
 ```sh-session
+$ npm install -g inferno-cli
+$ inferno COMMAND
+running command...
+$ inferno (-v|--version|version)
+inferno-cli/0.0.1 win32-x64 node-v14.15.0
+$ inferno --help [COMMAND]
+USAGE
+  $ inferno COMMAND
+...
+```
+<!-- usagestop -->
+```sh-session
 $ inferno COMMAND
 running command...
 $ inferno (-v|--version|version)
@@ -28,6 +40,151 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`inferno build PROJECT`](#inferno-build-project)
+* [`inferno diff PROJECT`](#inferno-diff-project)
+* [`inferno generate PROJECT FILE`](#inferno-generate-project-file)
+* [`inferno help [COMMAND]`](#inferno-help-command)
+* [`inferno pull PROJECT FILTER`](#inferno-pull-project-filter)
+* [`inferno push PROJECT FILE`](#inferno-push-project-file)
+* [`inferno video PROJECT`](#inferno-video-project)
+
+## `inferno build PROJECT`
+
+Build inferno Project index page and index JSON data file
+
+```
+USAGE
+  $ inferno build PROJECT
+
+ARGUMENTS
+  PROJECT  project name to pull from
+
+EXAMPLE
+  $ inferno build projectname
+```
+
+_See code: [src\commands\build.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\build.ts)_
+
+## `inferno diff PROJECT`
+
+Compare local code snippets with snippets on the server
+
+```
+USAGE
+  $ inferno diff PROJECT
+
+ARGUMENTS
+  PROJECT  project name to compare snippets from
+
+EXAMPLE
+  $ inferno diff projectname
+```
+
+_See code: [src\commands\diff.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\diff.ts)_
+
+## `inferno generate PROJECT FILE`
+
+Creates a new project directory if it does not exists and creates a new Code Snippet Template HTML file in the project directory
+
+```
+USAGE
+  $ inferno generate PROJECT FILE
+
+OPTIONS
+  -f, --file=file        file name to create. Will be created under project folder
+  -h, --help             show CLI help
+
+  -p, --project=project  directory for project. Will be created if it does not already exist. The project name needs to
+                         exist in inferno.config.js file
+
+  -t, --test             set to test
+```
+
+_See code: [src\commands\generate.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\generate.ts)_
+
+## `inferno help [COMMAND]`
+
+display help for inferno
+
+```
+USAGE
+  $ inferno help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src\commands\help.ts)_
+
+## `inferno pull PROJECT FILTER`
+
+Pull code snippets to Inferno AR Instance associated with your login
+
+```
+USAGE
+  $ inferno pull PROJECT FILTER
+
+ARGUMENTS
+  PROJECT  project name to pull from
+
+  FILTER   case insensitive search filter for pulling snippets, use "*" to pull all, use "abcd*" to starts with, "abcd"
+           for exact match
+
+OPTIONS
+  -c, --create  create local template files from code snippets that exist on the server. Files will be placed in sub
+                directories based on snippet type. local files WILL BE OVERWRITTEN if they already exist
+
+EXAMPLE
+  $ inferno pull projectname
+```
+
+_See code: [src\commands\pull.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\pull.ts)_
+
+## `inferno push PROJECT FILE`
+
+Push code snippets to Inferno AR Instance associated with your login
+
+```
+USAGE
+  $ inferno push PROJECT FILE
+
+ARGUMENTS
+  PROJECT  project/directory to push from
+  FILE     file name to push (relative to project dir) or *all to push all files in project sub dir
+
+OPTIONS
+  -c, --comment=comment  [default: Updated via inferno-cli] comment to add to snippet revision when pushed
+  -h, --help             show CLI help
+  -u, --update           if omitted, updates to the target system will not take place
+
+EXAMPLES
+  $ inferno push acme *.*
+  $ inferno push acme category/lobby.html -u
+  $ inferno push -p=acme -f="category/lobby.html" -c="updating breakout session links" -u
+```
+
+_See code: [src\commands\push.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\push.ts)_
+
+## `inferno video PROJECT`
+
+list video event details from Inferno AR Instance associated with your login
+
+```
+USAGE
+  $ inferno video PROJECT
+
+ARGUMENTS
+  PROJECT  project name to pull from
+
+EXAMPLE
+  $ inferno video projectname
+```
+
+_See code: [src\commands\video.ts](https://github.com/novologic/inferno-cli/blob/v0.0.1/src\commands\video.ts)_
+<!-- commandsstop -->
 * [`inferno diff PROJECT`](#inferno-diff-project)
 * [`inferno generate [PROJECT] [FILE]`](#inferno-generate-project-file)
 * [`inferno help [COMMAND]`](#inferno-help-command)

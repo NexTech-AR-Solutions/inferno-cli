@@ -9,11 +9,18 @@ export class InfernoAPI {
   clientId: string | undefined;
   userRoles: Array<string> | undefined;
   domain: string | undefined;
+  platform: string | undefined;
 
   constructor() {
   }
 
-  async init(username: string | undefined, password: string | undefined, domain: string | undefined) {
+  async init(username: string | undefined, password: string | undefined, domain: string | undefined, platform: string | undefined) {
+    if(platform) {
+      switch(platform) {
+        case "azure": InfernoAPI.baseUrl = "https://prod-eastus-ingress.inferno.jolokia.com/api/"; break;
+        default: break;
+      }
+    }
     this.domain = domain;
     const endPoint = 'token';
     const url = InfernoAPI.baseUrl + endPoint;

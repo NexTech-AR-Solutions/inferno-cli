@@ -8,7 +8,8 @@ export type Project = {
   username: string,
   password: string,
   wrapperElement?: string,
-  domain: string
+  domain: string, 
+  platform?: string
 }
 
 export default class NovoUtils {
